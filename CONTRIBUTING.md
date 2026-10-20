@@ -106,7 +106,7 @@ type:
 例：
 ```
 feat: 新增 Drill / 电钻类目的配置维度表
-fix: 修正 Shopee 标题字符数上限说明
+fix: 修正 TikTok Shop 标题字符数上限说明
 prompt: 03 标题生成 Prompt 增加"主关键词位置校验"
 ```
 

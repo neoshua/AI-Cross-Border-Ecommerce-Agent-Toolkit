@@ -13,7 +13,7 @@
 | 小件毛利率 | **25–30%** |
 | 广告成本占比 | 大件 **~5%** / 小件 **5–10%** |
 | 退货损耗 | **2%** |
-| 平台佣金 | 按类目实查（Mercado Livre 常见 8–16%） |
+| 平台佣金 | 按类目实查（TikTok Shop 常见 8–16%） |
 | 尾程物流 | 按实际商品测（SOP 称为"商品尾程费用"） |
 | 仓库操作费 | 按产品尺寸档位 |
 | 调价节奏 | **前期可略降毛利养权重，权重起来后再回提** |
@@ -23,16 +23,16 @@
 ## 二、核心公式
 
 > **2026-10 起**：本模板的手工计算已由脚本 `Agents/02_Product_Strategy_Agent/scripts/sku_pricing.py`
-> 自动化，并内置 5 个平台的费率预设（Shopee BR / ML Clássico / ML Premium / Amazon BR / TikTok Shop BR，
-> 含价格分档佣金与按件固定费）：
+> 自动化，并内置 3 套 TikTok Shop 泰国站费率预设（普通店 / Mall / 电子，
+> 含按笔固定费 THB 1.07 与商业增长费）：
 >
 > ```bash
-> python Agents/02_Product_Strategy_Agent/scripts/sku_pricing.py calc --platform shopee_br --cost 935 --price 2199
+> python Agents/02_Product_Strategy_Agent/scripts/sku_pricing.py calc --platform tiktok_th --cost 210 --price 590
 > python Agents/02_Product_Strategy_Agent/scripts/sku_pricing.py --list-platforms
 > ```
 >
 > 费率口径与来源见 `Agents/02_Product_Strategy_Agent/references/pricing-rules.md`；
-> **没有可靠费率来源的平台不做预设**（Magalu / Temu / Shein 等），手工传参。
+> 泰国站类目费率差异大，拿到卖家中心实际值后用 `--commission` / `--extra-pct` 覆盖。
 > 下面的手工公式保留用于理解原理与核对脚本结果。
 
 ### 售价公式
@@ -196,7 +196,7 @@ SOP 的核心判断：
 | 仓库操作费 | 按体积档 | 必须按实际报价 |
 | 支付手续费 | 按平台 | 部分平台单列，需确认是否已含在佣金里 |
 
-> ⚠️ **拉美市场特别提醒**：巴西站的税费结构复杂（州税、联邦税、进口税），**本模型未包含税费**。实际定价时必须按你的实际税务方案补充税费项，否则算出的毛利率会偏高。
+> ⚠️ **泰国市场特别提醒**：泰国站的税费结构复杂（州税、联邦税、进口税），**本模型未包含税费**。实际定价时必须按你的实际税务方案补充税费项，否则算出的毛利率会偏高。
 > 建议在分母里再加一项 `税率`，公式变为：
 > ```
 > P = 分子 ÷ (1 − 佣金率 − 广告率 − 退货率 − 税率 − 目标毛利率)
@@ -208,7 +208,7 @@ SOP 的核心判断：
 
 - [ ] 佣金率是**按实际类目查**的，不是套用参考值
 - [ ] 尾程物流是**实测**的，不是估的
-- [ ] 已按巴西（或其他市场）实际税务方案补充税费项
+- [ ] 已按泰国（或其他市场）实际税务方案补充税费项
 - [ ] 已算出**盈亏线 P₀**，并确认所有 SKU 定价高于 P₀
 - [ ] 低配引流款特别核对过盈亏线（最容易亏在这里）
 - [ ] 已按 SKU 角色分层设置毛利率，形成"引导往高价走"的结构

@@ -9,7 +9,7 @@
 
 ```yaml
 platform*: shopee              # shopee | mercadolivre | amazon | tiktokshop | shopify
-target_market*: 巴西
+target_market*: 泰国
 mode*: standard                # standard | variant | iterate
 prompt_language: en            # en（通用模型）| zh（即梦/通义万相等中文模型）
 has_product_photo*: true       # 是否有实拍图作为参考
@@ -83,7 +83,7 @@ package_content*: []           # 从 03 继承，完整列出
 
 warranty*: ""                  # 例："6 meses contra defeito de fabricação"
 warranty_scope: ""             # 例："Não cobre danos por mau uso ou queda"
-support_channel: ""            # 例："Atendimento pelo chat do Shopee"
+support_channel: ""            # 例："Atendimento pelo chat do TikTok Shop"
 ```
 
 ---

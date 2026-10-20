@@ -171,10 +171,10 @@ def cmd_calc(args, plats) -> int:
     print(json.dumps(out, ensure_ascii=False, indent=2))
     if not getattr(args, "json", False):
         print(f"\n平台: {out['platform']} ｜ 佣金 {m['commission_pct_applied']}% ｜ "
-              f"固定费 R$ {m['fixed_fee_applied']:.2f} ｜ 平台附加 {fm.extra_pct()}% ｜ "
+              f"固定费 ฿ {m['fixed_fee_applied']:.2f} ｜ 平台附加 {fm.extra_pct()}% ｜ "
               f"退货 {fm.return_pct()}% ｜ 税 {fm.tax_pct()}% ｜ 广告 {fm.ad_pct()}%")
-        print(f"净利率 {m['net_rate']:.1%} ｜ 盈亏价 R$ {be:,.2f} ｜ "
-              f"目标价 R$ {tp:,.2f} ｜ 券余量 R$ {out['coupon_headroom']:,.2f}")
+        print(f"净利率 {m['net_rate']:.1%} ｜ 盈亏价 ฿ {be:,.2f} ｜ "
+              f"目标价 ฿ {tp:,.2f} ｜ 券余量 ฿ {out['coupon_headroom']:,.2f}")
         for note in fm.p.get("notes", [])[:3]:
             print(f"  ℹ️  {note}")
     return 0
@@ -262,7 +262,7 @@ def cmd_matrix(args, plats) -> int:
                   f"{r['vs_target']:>+9.1%}{r['coupon_headroom']:>9,.2f} {mark}")
         print()
         for l in ladder:
-            print(f"  阶梯 {l['frm']} → {l['to']}：差 R$ {l['gap']:,.2f}（{l['gap_pct']:.0%}）")
+            print(f"  阶梯 {l['frm']} → {l['to']}：差 ฿ {l['gap']:,.2f}（{l['gap_pct']:.0%}）")
         for n in notes:
             print(f"  ℹ️  {n}")
         for note in fm.p.get("notes", [])[:2]:
@@ -278,16 +278,20 @@ def cmd_list_platforms(plats) -> int:
             continue
         ct = v.get("commission_tiers")
         if ct:
-            comm = "/".join(f"≤{t['max']}:{t['pct']}%" if t.get("max") is not None
-                            else f">{[x['max'] for x in ct if x.get('max')][-1]}:{t['pct']}%"
-                            for t in ct)
+            caps = [x["max"] for x in ct if x.get("max") is not None]
+            comm = "/".join(
+                f"≤{t['max']}:{t['pct']}%" if t.get("max") is not None
+                else (f">{caps[-1]}:{t['pct']}%" if caps else f"{t['pct']}%")
+                for t in ct)
         else:
             comm = f"{v.get('commission_pct', '-')}%"
         ft = v.get("fixed_fee_tiers")
         if ft:
-            fee = "/".join(f"≤{t['max']}:{t['fee']}" if t.get("max") is not None
-                           else f">{[x['max'] for x in ft if x.get('max')][-1]}:{t['fee']}"
-                           for t in ft)
+            caps = [x["max"] for x in ft if x.get("max") is not None]
+            fee = "/".join(
+                f"≤{t['max']}:{t['fee']}" if t.get("max") is not None
+                else (f">{caps[-1]}:{t['fee']}" if caps else f"每笔 {t['fee']}")
+                for t in ft)
         else:
             fee = "0"
         print(f"{k:<28}{v.get('label', k):<22}{comm:<12}{fee:<26}{v.get('extra_pct', 0):<7g}")
@@ -299,7 +303,7 @@ def cmd_list_platforms(plats) -> int:
 def _num(v, default=0.0, kind="dec"):
     if v is None:
         return default
-    s = str(v).strip().replace("R$", "").replace("%", "").replace(" ", "")
+    s = str(v).strip().replace("฿", "").replace("%", "").replace(" ", "")
     if s in ("", "-", "—", "暂无", "N/A", "nan"):
         return default
     neg = s.startswith("-")
@@ -328,7 +332,7 @@ def _add_common(p):
     p.add_argument("--ad", type=float, default=None, help="广告预算占售价 %%（覆盖预设）")
     p.add_argument("--tax", type=float, default=None, help="综合有效税率 %%（覆盖预设）")
     p.add_argument("--extra-pct", type=float, default=None, help="平台附加 %%（如免运计划；覆盖预设）")
-    p.add_argument("--fixed-fee", type=float, default=None, help="按件固定费 R$（覆盖预设阶梯）")
+    p.add_argument("--fixed-fee", type=float, default=None, help="按件固定费 ฿（覆盖预设阶梯）")
     p.add_argument("--target-margin", type=float, default=None, help="目标净利 %%（默认 32）")
 
 
@@ -340,8 +344,8 @@ def main():
 
     c = sub.add_parser("calc", help="单 SKU：净利率 / 盈亏价 / 目标价 / 优惠券余量")
     _add_common(c)
-    c.add_argument("--cost", type=float, required=True, help="到岸成本 R$")
-    c.add_argument("--price", type=float, required=True, help="售价 R$")
+    c.add_argument("--cost", type=float, required=True, help="到岸成本 ฿")
+    c.add_argument("--price", type=float, required=True, help="售价 ฿")
     c.add_argument("--json", action="store_true", help="仅输出 JSON")
 
     m = sub.add_parser("matrix", help="多 SKU 矩阵：读 CSV 出净利率表 + 价格阶梯 + 券余量")

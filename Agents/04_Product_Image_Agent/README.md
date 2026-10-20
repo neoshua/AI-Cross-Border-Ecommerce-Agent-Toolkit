@@ -11,7 +11,7 @@
 | 痛点 | 表现 | 本模块怎么解 |
 |---|---|---|
 | **9 张图不知道放什么** | 拍了一堆图，功能重复，关键信息缺 | 固定 9 图分工框架，每张图有明确职责 |
-| **主图平台规范踩雷** | ML 主图加文字被下架；Shopee 主图没卖点点击低 | `platform_variant` 参数，输出两套方案 |
+| **主图平台规范踩雷** | ML 主图加文字被下架；TikTok Shop 主图没卖点点击低 | `platform_variant` 参数，输出两套方案 |
 | **出图 Prompt 写不出效果** | 丢给 AI 一句话，出来的图不能用 | 结构化 Prompt：主体 + 材质 + 光位 + 构图 + 参数 + 负面词 |
 | **图内文案超长** | 图上文字挤成一团，买家看不清 | 每张图标注字数上限 + 实际字数 |
 
@@ -35,7 +35,7 @@ SOP 3.3 写了一句：
 | 步骤 | 依据 | 产出 |
 |---|---|---|
 | 1 | SOP 详情页 7 段结构（欢迎语/卖点/场景/参数/售后/注意/标签） | 转换出"信息型图位"：卖点图、参数图、场景图、售后图 |
-| 2 | 平台硬规范（Shopee 主图可带字 / ML 禁字；ML 需保修图） | 补出"主图"与"售后/保修图"，且标出平台差异 |
+| 2 | 平台硬规范（TikTok Shop 主图可带字 / ML 禁字；ML 需保修图） | 补出"主图"与"售后/保修图"，且标出平台差异 |
 | 3 | 差评高发项（配件缺失、尺寸不符预期） | 补出"尺寸/对比图"与"包装清单图" |
 
 > 第 3 步是本框架与"通用 9 图模板"的区别：**它把「差评对冲」作为图位的设计目标之一**，而不是只考虑"展示产品"。
@@ -91,9 +91,7 @@ SOP 3.3 写了一句：
 04_Product_Image_Agent/
 ├── SKILL.md                        # Agent 入口：意图识别 → 规则路由 → 出图 → 校验
 ├── references/
-│   ├── platform-shopee.md          # Shopee 巴西规则卡（首图推荐叠字 / 2MB 上限 / 9 图）
-│   ├── platform-mercadolivre.md    # ML 规则卡（2026 新规：背景按类目 / 占比 95% / 首图禁促销文字）
-│   ├── platform-amazon.md          # Amazon 对照卡（最严白底标准）
+│   ├── platform-tiktok-th.md       # 泰国站规则卡（首图纯色底 / ≥60% 占比 / 5MB / 9 图 / 必备资质图）
 │   └── scenarios-9grid.md          # 9 图场景库（每图位：目的/构图/prompt 骨架/平台差异）
 ├── scripts/
 │   └── check_main_image.py         # 像素级合规校验 + --fix 自动修复（纯 Pillow）⭐
@@ -107,8 +105,8 @@ SOP 3.3 写了一句：
 
 ```bash
 # 出图后必跑的合规校验（像素级，非"看一眼"）
-python scripts/check_main_image.py 出图.png --platform mercadolivre
-python scripts/check_main_image.py 出图.png --platform shopee --fix 修复后.png
+python scripts/check_main_image.py 出图.png --platform tiktok_th
+python scripts/check_main_image.py 出图.png --platform tiktok_th --fix 修复后.png
 ```
 
 校验不过的图**不许交付**；`--fix` 能自动修的（白底不纯、留白过多、非正方形）会直接修好并复检。
@@ -119,7 +117,7 @@ python scripts/check_main_image.py 出图.png --platform shopee --fix 修复后.
 
 | # | 图位 | 职责 | 信息来源 | 平台差异 |
 |---|---|---|---|---|
-| 1 | **主图** | 一眼说清"这是什么" | `product_name` + 平台规则卡 | ⚠️ ML 首图禁促销文字；Shopee 推荐叠字 |
+| 1 | **主图** | 一眼说清"这是什么" | `product_name` + 平台规则卡 | ⚠️ ML 首图禁促销文字；TikTok Shop 推荐叠字 |
 | 2 | **核心卖点图** | 一句话主卖点视觉化 | `core_selling_point` | 通用 |
 | 3 | **参数规格图** | 把 `spec_table` 可视化 | `spec_table` | 通用 |
 | 4 | **使用场景图 A** | 主场景代入 | `usage_scope[0]` | 通用 |
@@ -127,9 +125,9 @@ python scripts/check_main_image.py 出图.png --platform shopee --fix 修复后.
 | 6 | **细节特写图** | 材质、做工、关键部件 | `secondary_points` | 通用 |
 | 7 | **尺寸/对比图** | 消除"尺寸不符预期" | `spec_table` 尺寸项 | ML 建议加 |
 | 8 | **包装清单图** | 明确"含什么 / 不含什么" | `package_content` | **差评对冲关键图** |
-| 9 | **售后/保修图** | 降低购买顾虑 | `warranty` | **巴西站强建议** |
+| 9 | **售后/保修图** | 降低购买顾虑 | `warranty` | **泰国站强建议** |
 
-> 第 8、9 张图是最容易被忽略、但收益最直接的两张：**第 8 张对冲"以为含 X"的误解型差评，第 9 张是巴西消费法语境下的信任要素。**
+> 第 8、9 张图是最容易被忽略、但收益最直接的两张：**第 8 张对冲"以为含 X"的误解型差评，第 9 张是泰国消费法语境下的信任要素。**
 
 ---
 

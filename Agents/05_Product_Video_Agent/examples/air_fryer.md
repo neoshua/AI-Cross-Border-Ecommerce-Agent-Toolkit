@@ -1,4 +1,4 @@
-# 案例 · Air Fryer 5L（Shopee 巴西站）
+# 案例 · Air Fryer 5L（TikTok Shop 泰国站）
 
 > **案例类型**：真实产品 · 已脱敏
 > **使用模块**：05 Product Video Agent（上游 03 + 04）
@@ -12,7 +12,7 @@
 | 项 | 内容 |
 |---|---|
 | 产品 | 5L 空气炸锅，8 种预设程序，可视窗口，炸篮可拆卸不粘涂层 |
-| 市场 | 巴西（Shopee BR） |
+| 市场 | 泰国（TikTok Shop TH） |
 | 类目 | 家电 |
 | 定位 | 利润款 |
 | 视觉调性 | 明亮、居家、暖色 |
@@ -25,7 +25,7 @@
 
 ```yaml
 platform: shopee
-target_market: 巴西
+target_market: 泰国
 durations: [15, 30]
 mode: standard
 production_mode: mixed
@@ -113,10 +113,10 @@ hook_material:
 
 **选定 A**，理由：
 - 直接来自**竞品差评高频抱怨**（SOP 1.6 的做法）
-- 巴西买家在家里对"等空气炸锅预热"有真实体感，钩子命中的是**已有的痛点**，不需要教育市场
+- 泰国买家在家里对"等空气炸锅预热"有真实体感，钩子命中的是**已有的痛点**，不需要教育市场
 - 3 秒内能拍完，且画面有动作（计时器跳动）
 
-> **B 也很有力**，但它假设观众已经想要空气炸锅；A 假设观众已经有了一台慢的或对慢有顾虑——后者在巴西站的受众更广。
+> **B 也很有力**，但它假设观众已经想要空气炸锅；A 假设观众已经有了一台慢的或对慢有顾虑——后者在泰国站的受众更广。
 
 ### 4.2 15s 版脚本
 
@@ -191,7 +191,7 @@ pauses: "句末 0,3s / 镜头切换 0,2s"
 diacritics_checked: true   # 已核对：três, família, óleo, antaderente → antiaderente, português, botão
 ```
 
-> 注：本案例初稿把 `botão` 写成 `botao`、`três` 写成 `tres`，已在核对环节修正。**变音符号是 PT-BR TTS 的翻车点**——`botao` 和 `botão` 发音完全不同。
+> 注：本案例初稿把 `botão` 写成 `botao`、`três` 写成 `tres`，已在核对环节修正。**变音符号是 泰语 TTS 的翻车点**——`botao` 和 `botão` 发音完全不同。
 
 ### 4.6 真人镜头处理（镜头 6）
 
@@ -265,7 +265,7 @@ diacritics_checked: true   # 已核对：três, família, óleo, antaderente →
 ## 五、技术需求
 
 ```yaml
-aspect_ratio: "1:1"            # Shopee 主图位；TikTok 版改 9:16
+aspect_ratio: "1:1"            # TikTok Shop 主图位；TikTok 版改 9:16
 resolution: "1080x1080"
 bgm_mood: "暖调、轻快、日常感，不喧闹，中段渐强、结尾干净收束"
 bgm_license: "需使用可商用素材"
@@ -303,7 +303,7 @@ overlay_elements:
 | **钩子从评论里捡，不用创作** | 钩子 A 直接来自竞品差评的"预热太慢"抱怨 |
 | **配音时长必须实算** | 65 词 ÷ 2,5 词/秒 = 26,0s，全部数字可复现；超了要删词不加语速 |
 | **静音可理解性是硬指标** | 三项全过才算通过——多数买家静音浏览 |
-| **变音符号是 PT-BR 的翻车点** | 初稿 `botao` / `tres` 已修正为 `botão` / `três` |
+| **变音符号是 泰语 的翻车点** | 初稿 `botao` / `tres` 已修正为 `botão` / `três` |
 | **真人镜头要区别处理** | 镜头 6 从"真人面部"改为"肩部以下"，并给出不露脸 AI 替代 |
 | **字幕比配音短** | 钩子配音是完整问句，字幕精简为 `Esperando esquentar?` |
 | **15s 与 30s 版钩子/CTA 一致** | 两个版本动的是同一个念头 |

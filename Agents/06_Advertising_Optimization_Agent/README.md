@@ -5,7 +5,7 @@
 > **Skill 化（v0.4）**：本模块已提供可被 Agent 直接调用的入口 [`SKILL.md`](SKILL.md)，
 > 并新增确定性算术脚本 [`scripts/ad_metrics.py`](scripts/ad_metrics.py)
 > （`calc` 算盈亏线/可承受 CPC，`diagnose` 读广告导出 CSV 输出 P0/P1/P2 分级动作，
-> 纯标准库、支持中/英/葡列名、含巴西税费项）。
+> 纯标准库、支持中/英/葡列名、含泰国税费项）。
 > 规则与口径见 [`references/`](references/) 四件套：[metrics](references/metrics.md) ·
 > [diagnosis](references/diagnosis.md) · [playbooks](references/playbooks.md) · [actions](references/actions.md)。
 > **本 Skill 只建议、不执行** —— 写后台属路线 B，未实现。

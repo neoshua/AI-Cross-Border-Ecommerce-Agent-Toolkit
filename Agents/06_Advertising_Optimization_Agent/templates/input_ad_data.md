@@ -8,9 +8,9 @@
 
 ```yaml
 platform*: shopee              # shopee | mercadolivre
-ad_type*: keyword              # keyword | product | shop（Shopee）/ Mercado Ads
+ad_type*: keyword              # keyword | product | shop（TikTok Shop）/ Mercado Ads
 test_window_days*: 7           # 数据覆盖天数
-target_market: 巴西
+target_market: 泰国
 target_market_timezone: "UTC-3"
 
 # 可选但建议填
@@ -33,7 +33,7 @@ cost_structure*:
   warehouse: 0.00              # 仓储 / 操作费
   commission_rate: 0.14        # 平台佣金率（⚠️ 按实际类目查）
   return_rate: 0.02            # 退货损耗率（SOP 规定 2%）
-  # 巴西站提醒：税费未含在此处，若有独立税率请另加字段
+  # 泰国站提醒：税费未含在此处，若有独立税率请另加字段
 
 target_margin_rate: 0.28       # 目标毛利率（大件 30–35% / 小件 25–30%）
 ad_cost_rate_assumed: 0.075    # 定价时预留的广告成本率（小件 5–10%）

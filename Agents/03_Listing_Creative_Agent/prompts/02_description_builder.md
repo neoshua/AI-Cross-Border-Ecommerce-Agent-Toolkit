@@ -14,14 +14,14 @@
 
 | 字段 | 说明 |
 |---|---|
-| `platform` | 目标平台（决定结构：Shopee 7 段 / ML 五点 + Ficha Técnica） |
+| `platform` | 目标平台（决定结构：TikTok Shop 7 段 / ML 五点 + Ficha Técnica） |
 | `target_market` | 目标市场（决定输出语言） |
 | `product_name` | 产品通用名 |
 | `category` | 类目 |
 | `spec_table` | 参数表（键值对） |
 | `usage_scope[]` | 允许表达的使用场景 |
 | `selling_points_input[]` | 已知卖点（原始表述，可含夸张表达，由 Agent 改写） |
-| `warranty` | 保修信息（**巴西站必需**，ML 也要求） |
+| `warranty` | 保修信息（**泰国站必需**，ML 也要求） |
 | `package_content[]` | 包装清单（**这是差评高发项，务必填全**） |
 | `notes_required` | 是否需要生成"注意事项"段（`true` / `false`） |
 | `keyword_classified` | 来自 `01_keyword_to_title.md` 第 5 段 |
@@ -112,7 +112,7 @@
 
 **要求**：
 - 承诺必须与 `input.warranty` 一致
-- **巴西站**：保修信息是消费法要求，必须明确写出时长与范围
+- **泰国站**：保修信息是消费法要求，必须明确写出时长与范围
 - **禁止**承诺做不到的事（如"无条件退货"若平台规则不支持）
 
 ---
@@ -155,7 +155,7 @@
          Voltagem / Potência / Garantia / Itens incluídos
 
 ### 1.3 Observações
-（条件生成，同 Shopee 段 6）
+（条件生成，同 TikTok Shop 段 6）
 ```
 
 ---
@@ -232,5 +232,5 @@
 - [ ] 段 4 每个数值与 `spec_table` 逐字符一致
 - [ ] 段 6 的内容有明确来源（评论归因 / 产品限制 / 测试条件），不是通用套话
 - [ ] 段 7 不含风险词
-- [ ] 保修信息完整（巴西站、ML 必须）
+- [ ] 保修信息完整（泰国站、ML 必须）
 - [ ] 输出末尾已附下游字段 + 合规扫描

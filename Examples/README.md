@@ -4,15 +4,20 @@
 
 单模块的聚焦案例在各 Agent 目录下的 `examples/`，本目录只放**端到端**案例。
 
+> ⚠️ **语言层说明**：这些案例是仓库早期（Shopee 巴西站时期）录制的，文案原文是**葡萄牙语**，
+> 数值与价格也按当时的市场设定。它们保留下来是因为**结构与推导过程仍然成立**（价格带分析、
+> 卖点收敛、九图分工、闭环回改），但**买家可见文本必须按泰语重做**，价格要按 THB 与泰国站费率重算。
+> 规则层（字符数、图片规格、费率）以 TikTok 泰国站规则卡为准，不要沿用案例里的数字。
+
 ---
 
 ## 案例索引
 
 | # | 产品 | 市场 | 覆盖模块 | 重点演示 |
 |---|---|---|---|---|
-| **01** | [Patinete Elétrico 500W](./01_Patinete_Eletrico_500W/)（电动滑板车） | Shopee BR + Mercado Livre | 03 → 04 → 05 | **全链路串联** · 跨平台标题压缩（120→60 字符）· 跨模块参数一致性 |
-| **02** | [Bolsa Térmica](./02_Thermal_Bag/)（保温包） | Shopee BR | 03（iterate） | **iterate 模式**：广告跑不动时的回改闭环 |
-| **03** | [Closed Loop](./03_Closed_Loop/)（闭环案例） | Shopee BR | 03 → 06 → 03 → 04 → 07 → 复测 | **诊断 → 回流 → 复测** 完整闭环 · 反直觉的坑 · 复测指标选择 |
+| **01** | [Patinete Elétrico 500W](./01_Patinete_Eletrico_500W/)（电动滑板车） | TikTok Shop 泰国站 | 03 → 04 → 05 | **全链路串联** · 九图分工 · 跨模块参数一致性 |
+| **02** | [Bolsa Térmica](./02_Thermal_Bag/)（保温包） | TikTok Shop 泰国站 | 03（iterate） | **iterate 模式**：广告跑不动时的回改闭环 |
+| **03** | [Closed Loop](./03_Closed_Loop/)（闭环案例） | TikTok Shop 泰国站 | 03 → 06 → 03 → 04 → 07 → 复测 | **诊断 → 回流 → 复测** 完整闭环 · 反直觉的坑 · 复测指标选择 |
 
 ---
 
@@ -24,7 +29,7 @@
 |---|---|---|
 | **01 市场分析** | [`01/examples/patinete_eletrico_market.md`](../Agents/01_Market_Research_Agent/examples/patinete_eletrico_market.md) | 价格带 R$ 1.989–2.966 · 机会配置 200kg · 成本可行价 R$ 1.989,36 |
 | **02 产品策略** | [`02/examples/patinete_eletrico_strategy.md`](../Agents/02_Product_Strategy_Agent/examples/patinete_eletrico_strategy.md) | 主卖点「500W + 200kg」· SKU 四档 · 主推价 R$ 2.199 · 盈亏线 ROAS 2,41 |
-| **03–05 素材** | [`01_Patinete_Eletrico_500W/`](./01_Patinete_Eletrico_500W/) | 标题（Shopee 89 字符 / ML 54 字符）· 9 图 · 30s 视频 |
+| **03–05 素材** | [`01_Patinete_Eletrico_500W/`](./01_Patinete_Eletrico_500W/) | 标题（案例原文 89 字符，泰语版需重写）· 9 图 · 30s 视频 |
 
 **这条链路特别值得看的地方**：两个"独立推导指向同一结果"的验证点 ——
 

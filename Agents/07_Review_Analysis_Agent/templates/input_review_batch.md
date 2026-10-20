@@ -1,7 +1,7 @@
 # 输入模板 · 评论批量导入
 
 > ⚠️ **导入前必须脱敏**：删除买家昵称、订单号、头像 URL、可识别的个人信息。
-> 评论原文**保留原始语言**（葡语/西语），不要预先翻译——翻译会丢失表达线索（如"esperava que"这类误解型特征词）。
+> 评论原文**保留原始语言**（泰语/西语），不要预先翻译——翻译会丢失表达线索（如"esperava que"这类误解型特征词）。
 
 ---
 
@@ -9,7 +9,7 @@
 
 ```yaml
 platform*: shopee
-target_market*: 巴西
+target_market*: 泰国
 product_name*: ""
 analysis_scope*: own          # own（仅我方）| competitor（仅竞品）| both（对比）
 ```

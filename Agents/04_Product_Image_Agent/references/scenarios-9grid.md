@@ -1,4 +1,4 @@
-# 9 图场景库（Shopee 序列 × 平台差异）
+# 9 图场景库（TikTok Shop 序列 × 平台差异）
 
 > 每个图位给出：**目的 / 构图 / prompt 骨架 / 平台差异**。
 > 用法：按 `planning_mode` 选序列 → 逐图位套模板 → 把「产品身份锁定」字段填进
@@ -38,17 +38,16 @@ no extra objects, keep {must_not_change} unchanged
 | 项 | 内容 |
 |---|---|
 | 目的 | 搜索结果里的点击率 —— 决定生死的唯一一张 |
-| 构图 | 正面平视，商品占 **Shopee 70–85% / ML 85–95%**，居中 |
+| 构图 | 正面平视，商品占画面 **80–90%**，居中，四边留 5–10% 边距 |
 | 骨架 | `studio packshot of [PRODUCT], front view, on {bg}, soft studio lighting` |
-| **Shopee** | 白底 + **PT-BR 叠字**（主标语 ≤4 词，总文字 ≤画面 20%，右上留 12% 给角标） |
-| **ML** | 背景**干净即可**（白/纯色/实景按类目），❌ 禁一切无关文字 |
-| Amazon | 纯白 `#FFFFFF`，零文字 |
+| **硬规则** | 纯色底（白色最优）+ **零文字**：首图带文字/贴纸/促销角标会被自动审核直接拒 |
+| **例外** | 计量类（秤）等类目需资质/标签图，那类图放第 9 图位，别占首图 |
+| **右上 12%** | 留空给价格角标（平台会叠） |
 
-**Shopee BR 叠字模板**：
+**首图 Prompt 的否定清单（必带）**：
 
 ```text
-top banner text "{主标语 ≤4 词}" in bold {color} PT-BR typography,
-occupying less than 20% of the image area, never covering the product
+no text, no watermark, no logo overlay, no badge, no border, no props, no hands
 ```
 
 ---
@@ -73,7 +72,7 @@ occupying less than 20% of the image area, never covering the product
 | 目的 | 证明品质感 —— 支撑价格 |
 | 构图 | 微距，对焦在 {材质关键点}（接口 / 织纹 / 涂层） |
 | 骨架 | `extreme close-up macro of [PRODUCT] {detail_point}, shallow depth of field` |
-| 差异 | 三平台一致；Shopee 可叠一个卖点词 |
+| 差异 | 三平台一致；TikTok Shop 可叠一个卖点词 |
 
 ---
 
@@ -85,7 +84,7 @@ occupying less than 20% of the image area, never covering the product
 | 构图 | 商品在真实使用环境，占比 55–70%，环境为次要 |
 | 骨架 | `[PRODUCT] placed on {scene}, contextual photography, natural lighting` |
 | **ML** | ✅ **Fashion/Home/Sports 类目这张可以直接当首图**（新规允许实景） |
-| Shopee | ✅ 辅图位 |
+| TikTok Shop | ✅ 辅图位 |
 
 > 场景要**可信**：透视、比例、接触阴影、反射都要对 —— 沙发不能飘在房间里。
 
@@ -98,8 +97,8 @@ occupying less than 20% of the image area, never covering the product
 | 目的 | 防尺寸误解 —— 尺寸类差评的特效药 |
 | 构图 | 商品 + 参照物（手 / 硬币 / A4 纸）或白底标注尺寸线 |
 | 骨架 | `[PRODUCT] with size annotation, {reference_object} for scale, clean background` |
-| 文字 | ✅ 标数字（`19cm` / `20000mAh`），**用 cm 不用 inch**（巴西公制） |
-| 差异 | Shopee ✅ / ML ✅（辅图允许标注） |
+| 文字 | ✅ 标数字（`19cm` / `20000mAh`），**用 cm 不用 inch**（泰国公制） |
+| 差异 | TikTok Shop ✅ / ML ✅（辅图允许标注） |
 
 ---
 
@@ -110,8 +109,8 @@ occupying less than 20% of the image area, never covering the product
 | 目的 | 把 03 Agent 的 `secondary_points[]` 变成视觉 |
 | 构图 | 商品一侧 + 卖点图标列表（最多 3 条） |
 | 骨架 | `infographic style, [PRODUCT] on one side, {n} benefit callouts with icons on the other` |
-| 文字 | ✅ 每条卖点 ≤7 词 PT-BR（例：`Carrega 3 aparelhos ao mesmo tempo`） |
-| 差异 | Shopee ✅ / ML ✅（辅图） |
+| 文字 | ✅ 每条卖点 ≤7 词 泰语（例：`Carrega 3 aparelhos ao mesmo tempo`） |
+| 差异 | TikTok Shop ✅ / ML ✅（辅图） |
 
 ---
 
@@ -135,7 +134,7 @@ occupying less than 20% of the image area, never covering the product
 | 构图 | 平铺图：盒内所有物品摆开，含什么拍什么 |
 | 骨架 | `flat lay of package contents: [PRODUCT], {included_items}, on neutral background` |
 | 文字 | ✅ **必须标 `Não incluso`**（不含项）—— 这一条直接砍掉配件类差评 |
-| 差异 | Shopee ✅ / ML ✅ |
+| 差异 | TikTok Shop ✅ / ML ✅ |
 
 ---
 

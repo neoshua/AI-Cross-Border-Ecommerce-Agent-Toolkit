@@ -345,12 +345,12 @@ def render_md(payload: dict) -> str:
     L.append("|---|---|")
     L.append(f"| 样本商品数 | {cap['item_count']} |")
     L.append(f"| 月总销量 | {cap['total_monthly_sales']:,} |")
-    L.append(f"| 月总销售额 | R$ {_fmt_money(cap['total_monthly_revenue'])} |")
-    L.append(f"| 均价 | R$ {_fmt_money(cap['avg_price'])} |")
-    L.append(f"| 中位价 | R$ {_fmt_money(cap['median_price'])} |")
-    L.append(f"| 价格范围 | R$ {_fmt_money(cap['price_min'])} – R$ {_fmt_money(cap['price_max'])} |")
+    L.append(f"| 月总销售额 | ฿ {_fmt_money(cap['total_monthly_revenue'])} |")
+    L.append(f"| 均价 | ฿ {_fmt_money(cap['avg_price'])} |")
+    L.append(f"| 中位价 | ฿ {_fmt_money(cap['median_price'])} |")
+    L.append(f"| 价格范围 | ฿ {_fmt_money(cap['price_min'])} – ฿ {_fmt_money(cap['price_max'])} |")
     L.append(f"| 单商品平均月销量 | {cap['avg_monthly_sales_per_item']} |")
-    L.append(f"| 隐含均价（GMV÷销量） | R$ {_fmt_money(cap['implied_avg_price'])} |")
+    L.append(f"| 隐含均价（GMV÷销量） | ฿ {_fmt_money(cap['implied_avg_price'])} |")
     L.append(f"| 头部 10 名销售额占比 | {_fmt_pct(cap.get('rev_share_top10', 0))} |")
     L.append("")
 
@@ -367,7 +367,7 @@ def render_md(payload: dict) -> str:
         L.append("| # | 品牌 | 销售额 | 销售额占比 | 销量占比 | 商品数 |")
         L.append("|---|---|---|---|---|---|")
         for r in br["top_list"][:10]:
-            L.append(f"| {r['rank']} | {r['name']} | R$ {_fmt_money(r['revenue'])} | "
+            L.append(f"| {r['rank']} | {r['name']} | ฿ {_fmt_money(r['revenue'])} | "
                      f"{_fmt_pct(r['revenue_share'])} | {_fmt_pct(r['sales_share'])} | {r['item_count']} |")
         L.append("")
         L.append("> **判断**（SOP 1.3）：品牌集中度 < 50% → 白牌仍有机会；> 50% → 头部品牌影响强，需谨慎。\n")
@@ -392,8 +392,8 @@ def render_md(payload: dict) -> str:
     pb = payload.get("price_bands")
     if pb and pb.get("bins"):
         L.append("## 4. 价格带分析\n")
-        L.append(f"- 价格范围：R$ {_fmt_money(pb['price_range'][0])} – R$ {_fmt_money(pb['price_range'][1])}"
-                 f" ｜ 箱宽：R$ {_fmt_money(pb['bin_width'])}")
+        L.append(f"- 价格范围：฿ {_fmt_money(pb['price_range'][0])} – ฿ {_fmt_money(pb['price_range'][1])}"
+                 f" ｜ 箱宽：฿ {_fmt_money(pb['bin_width'])}")
         L.append("")
         L.append("### 4.1 等宽分箱（销量曲线）\n")
         L.append("| 区间 | 价格段 | 商品数 | 总销量 | 曲线 | 总销售额 | 单商品均销 |")
@@ -401,9 +401,9 @@ def render_md(payload: dict) -> str:
         peak = max((b["total_sales"] for b in pb["bins"]), default=0)
         for b in pb["bins"]:
             bar = "█" * int(_safe_div(b["total_sales"], peak) * 20) if peak else ""
-            L.append(f"| {b['index']} | R$ {_fmt_money(b['price_lo'])}–{_fmt_money(b['price_hi'])} | "
+            L.append(f"| {b['index']} | ฿ {_fmt_money(b['price_lo'])}–{_fmt_money(b['price_hi'])} | "
                      f"{b['item_count']} | {b['total_sales']:,} | {bar} | "
-                     f"R$ {_fmt_money(b['total_revenue'])} | {b['avg_sales_per_item']} |")
+                     f"฿ {_fmt_money(b['total_revenue'])} | {b['avg_sales_per_item']} |")
         L.append("")
         L.append("### 4.2 波谷检测\n")
         if pb.get("valleys"):
@@ -412,12 +412,12 @@ def render_md(payload: dict) -> str:
             L.append("| 箱序 | 价格边界 | 跌幅 | 作为价格带边界 |")
             L.append("|---|---|---|---|")
             for v in pb["valleys"]:
-                L.append(f"| {v['bin_index']} | R$ {_fmt_money(v['price'])} | {_fmt_pct(v['drop'])} | ✅ |")
+                L.append(f"| {v['bin_index']} | ฿ {_fmt_money(v['price'])} | {_fmt_pct(v['drop'])} | ✅ |")
             L.append("")
             if pb.get("noise_valleys"):
                 L.append(f"> 另有 {pb['noise_valleys']} 个跌幅不足阈值的候选波谷被过滤为噪声。\n")
             if pb.get("trimmed_valleys"):
-                names = "、".join(f"箱{v['bin_index']}(R$ {_fmt_money(v['price'])})"
+                names = "、".join(f"箱{v['bin_index']}(฿ {_fmt_money(v['price'])})"
                                 for v in pb["trimmed_valleys"])
                 L.append(f"> 因超出最多价格带数（{pb.get('max_bands', 5)}）被裁掉：{names}。"
                          f"如需保留请调大 `--max-bands`。\n")
@@ -429,9 +429,9 @@ def render_md(payload: dict) -> str:
             L.append("| 价格带 | 区间 | 商品数 | 总销量 | 总销售额 | 单商品均销 |")
             L.append("|---|---|---|---|---|---|")
             for b in pb["suggested_bands"]:
-                L.append(f"| #{b['band_index']} | R$ {_fmt_money(b['price_from'])}–{_fmt_money(b['price_to'])} | "
+                L.append(f"| #{b['band_index']} | ฿ {_fmt_money(b['price_from'])}–{_fmt_money(b['price_to'])} | "
                          f"{b['item_count']} | {b['total_sales']:,} | "
-                         f"R$ {_fmt_money(b['total_revenue'])} | {b['avg_sales_per_item']} |")
+                         f"฿ {_fmt_money(b['total_revenue'])} | {b['avg_sales_per_item']} |")
             L.append("")
             L.append("> ⚠️ 波谷切分只是**数学建议**。SOP 1.4 要求最终判断还要叠加："
                      "公司产品有没有利润、竞品是否特别强。这一步由 Agent 结合成本结构完成。\n")

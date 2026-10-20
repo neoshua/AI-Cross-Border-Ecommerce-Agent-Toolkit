@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
-"""像素级商品主图合规校验（Shopee / Mercado Livre / Amazon）。
+"""像素级商品主图合规校验（TikTok Shop 泰国站）。
 
-  python check_main_image.py 图.png --platform mercadolivre
-  python check_main_image.py 图.png --platform shopee --fix 修复后.png
-  python check_main_image.py 图.png --platform amazon --json
+  python check_main_image.py 图.png --platform tiktok_th
+  python check_main_image.py 图.png --platform tiktok_th --fix 修复后.png
+  python check_main_image.py 图.png --platform tiktok_th --json
 
-只依赖 Pillow。校验阈值来自 references/ 下各平台规则卡，不是拍脑袋。
+只依赖 Pillow。校验阈值来自 references/platform-tiktok-th.md 规则卡，不是拍脑袋。
 
 检查项
-  size_min        : 短边像素（低于平台最小值 = 直接 fail）
+  size_min        : 短边像素（TikTok 官方下限 600，推荐 1000+）
   square          : 宽高比 1:1（±1%，非正方形会被平台自动裁切）
-  coverage        : 主体包围盒最长边 ÷ 图边（三平台要求不同，ML 最严 ~95%）
-  white_bg        : 边缘 2% 带内近白像素占比（Amazon 必须 / Shopee 优先 / ML 不适用）
-  bg_uniformity   : 边缘带主色占比（ML 的"背景干净"，informational）
-  file_size       : 平台单图上限（Shopee 2MB 最严）
+  coverage        : 主体包围盒最长边 ÷ 图边（官方下限 60%，实战甜区 80–95%）
+  white_bg        : 边缘 2% 带内近白像素占比（TikTok 推荐白底，纯色可接受 → 软提示）
+  bg_uniformity   : 边缘带主色占比（背景是否干净）
+  file_size       : 平台单图上限（TikTok 5MB）
 
 --fix 自动修复：近白像素拉到纯白、补成正方形、按目标占比重排画布。
-  （ML 实景背景的"清理"需要抠图，脚本不做，会明确提示。）
+  （实景背景的"清理"需要抠图，脚本不做，会明确提示换纯色底。）
 """
 import argparse
 import json
@@ -28,19 +28,12 @@ try:
 except ImportError:
     sys.exit("需要 Pillow：pip install pillow")
 
-# 平台阈值（来源：references/platform-*.md 规则卡）
+# 平台阈值（来源：references/platform-tiktok-th.md 规则卡）
 PLATFORMS = {
-    "shopee": dict(
-        min_px=500, rec_px=1024, cover_min=0.60, cover_lo=0.70, cover_hi=0.92,
-        white_fail=0.90, white_warn=0.98, uniform_info=0.90, max_mb=2, fix_target=0.80,
-    ),
-    "mercadolivre": dict(
-        min_px=500, rec_px=1200, cover_min=0.80, cover_lo=0.85, cover_hi=0.97,
-        white_fail=None, white_warn=None, uniform_info=0.90, max_mb=10, fix_target=0.88,
-    ),
-    "amazon": dict(
-        min_px=1000, rec_px=2000, cover_min=0.85, cover_lo=0.85, cover_hi=0.97,
-        white_fail=0.98, white_warn=0.99, uniform_info=0.90, max_mb=10, fix_target=0.87,
+    "tiktok_th": dict(
+        min_px=600, rec_px=1000, cover_min=0.60, cover_lo=0.80, cover_hi=0.95,
+        white_fail=None, white_warn=0.95, white_target=True,
+        uniform_info=0.90, max_mb=5, fix_target=0.85,
     ),
 }
 
@@ -49,6 +42,33 @@ def _min_channel(img):
     """每像素取 RGB 最小通道：dist = 255 - 该值，0 = 纯白。纯 Pillow 实现。"""
     r, g, b = img.convert("RGB").split()
     return ImageChops.darker(ImageChops.darker(r, g), b)
+
+
+def _edge_strips(img, band_pct=0.02):
+    """四条边缘带，用于估背景色与判背景是否干净。"""
+    w, h = img.size
+    band = max(2, round(min(w, h) * band_pct))
+    return [img.crop((0, 0, w, band)), img.crop((0, h - band, w, h)),
+            img.crop((0, 0, band, h)), img.crop((w - band, 0, w, h))]
+
+
+def _bg_color(img, band_pct=0.02):
+    """背景基准色 = 四条边缘带各自均色的中位数。
+
+    为什么不直接用「近白」当背景：米白/浅灰/纯色底都会被误判成主体，
+    导致主体占比恒为 100%、--fix 无从下手。用边缘色当基准，换任何纯色底都成立。
+    """
+    px = []
+    for s in _edge_strips(img, band_pct):
+        px.append(s.convert("RGB").resize((1, 1), Image.BOX).getpixel((0, 0)))
+    return tuple(sorted(p[i] for p in px)[len(px) // 2] for i in range(3))
+
+
+def _product_bbox(img, bg, tol=18):
+    """与背景基准色差异 > tol 的像素包围盒（无差异返回 None）。"""
+    diff = ImageChops.difference(img.convert("RGB"),
+                                 Image.new("RGB", img.size, bg)).convert("L")
+    return diff.point([255 if v > tol else 0 for v in range(256)]).getbbox()
 
 
 def _near_white_ratio(mc_img, tol):
@@ -67,9 +87,9 @@ def analyse(img, plt_name, tol=3, product_thr=12, band_pct=0.02):
     hist = mc.histogram()
     total = w * h
 
-    # 主体包围盒：min channel < 255-thr 的像素 = 明显非白
-    lut = [255 if v < 255 - product_thr else 0 for v in range(256)]
-    bbox = mc.point(lut).getbbox()
+    # 主体包围盒：与边缘基准色差异明显（> product_thr）的像素
+    bgc = _bg_color(img)
+    bbox = _product_bbox(img, bgc, tol=product_thr)
     if bbox is None:
         return dict(width=w, height=h, coverage=0.0, bbox=None,
                     white_background=1.0, exact_ffffff=1.0, bg_uniformity=1.0)
@@ -79,9 +99,7 @@ def analyse(img, plt_name, tol=3, product_thr=12, band_pct=0.02):
     coverage = max(bw / w, bh / h)
 
     # 边缘 2% 带（四条），分别算近白占比与主色占比
-    band = max(2, round(min(w, h) * band_pct))
-    strips = [img.crop((0, 0, w, band)), img.crop((0, h - band, w, h)),
-              img.crop((0, 0, band, h)), img.crop((w - band, 0, w, h))]
+    strips = _edge_strips(img, band_pct)
     mc_strips = [_min_channel(s) for s in strips]
     white_bg = sum(_near_white_ratio(m, tol) for m in mc_strips) / len(mc_strips)
 
@@ -100,7 +118,7 @@ def analyse(img, plt_name, tol=3, product_thr=12, band_pct=0.02):
 
     return dict(width=w, height=h, coverage=round(coverage, 4), bbox=list(bbox),
                 white_background=round(white_bg, 4), exact_ffffff=round(exact, 4),
-                bg_uniformity=round(bg_uniformity, 4))
+                bg_uniformity=round(bg_uniformity, 4), bg_color=list(bgc))
 
 
 def check(img, path, plt_name, args):
@@ -136,7 +154,7 @@ def check(img, path, plt_name, args):
     else:
         add("PASS", "coverage", f"{c:.0%}")
 
-    # 背景纯白（Amazon 必须 / Shopee 优先 / ML 不适用）
+    # 背景纯白（TikTok：推荐白底，纯色可接受 → 不给 FAIL）
     if p["white_fail"] is not None:
         wb = m["white_background"]
         if wb < p["white_fail"]:
@@ -145,13 +163,21 @@ def check(img, path, plt_name, args):
             add("WARN", "white_bg", f"边缘带近白 {wb:.1%}（接近但未达 {p['white_warn']:.0%}，常见于灰底/米底）")
         else:
             add("PASS", "white_bg", f"{wb:.1%}")
+    elif p.get("white_target"):
+        wb = m["white_background"]
+        if wb < p["white_warn"]:
+            add("WARN", "white_bg",
+                f"边缘带近白 {wb:.1%} < {p['white_warn']:.0%} —— TikTok 推荐白底"
+                f"（纯色可接受，但白底搜索表现更稳）")
+        else:
+            add("PASS", "white_bg", f"{wb:.1%} —— 白底")
     else:
-        add("INFO", "white_bg", "ML 不强制纯白（按类目白/纯色/实景），跳过")
+        add("INFO", "white_bg", "该平台不校验背景色，跳过")
 
-    # 背景均匀度（ML 的"背景干净"）
+    # 背景均匀度（背景是否干净）
     u = m["bg_uniformity"]
     if u < 0.60:
-        add("WARN", "bg_uniformity", f"边缘带主色仅 {u:.0%} —— 背景可能杂乱（ML：avoid messy backgrounds）")
+        add("WARN", "bg_uniformity", f"边缘带主色仅 {u:.0%} —— 背景可能杂乱，换纯色底")
     elif u < p["uniform_info"]:
         add("WARN", "bg_uniformity", f"边缘带主色 {u:.0%}，背景略花")
     else:
@@ -165,10 +191,8 @@ def check(img, path, plt_name, args):
         add("PASS", "file_size", f"{mb:.2f} MB ≤ {p['max_mb']} MB")
 
     # 无法自动检测的项 → 人工确认
-    if plt_name == "mercadolivre":
-        add("MANUAL", "ml_cover_text", "首图禁促销文字/平台属性词/水印/边框 —— 人工确认")
-    if plt_name == "shopee":
-        add("MANUAL", "shopee_text_ratio", "图内文字 ≤ 画面 20% 且不大于主体 —— 人工确认")
+    add("MANUAL", "cover_text", "首图禁文字/贴纸/促销角标/水印/第三方 Logo/边框 —— 人工确认")
+    add("MANUAL", "sku_match", "图中颜色/款式必须与所售 SKU 一致（图文不符会判违规）—— 人工确认")
 
     ok = not any(lv == "FAIL" for lv, _, _ in res)
     return dict(platform=plt_name, ok=ok, metrics=m, checks=res)
@@ -180,22 +204,22 @@ def fix(img, plt_name, out_path, args):
     w, h = img.size
     mc = _min_channel(img)
 
-    # 1) 近白拉纯白（仅对白底平台）
-    if p["white_fail"] is not None:
+    # 1) 近白拉纯白（白底 / 推荐白底的平台）
+    if p["white_fail"] is not None or p.get("white_target"):
         snap_tol = max(8, args.tolerance + 5)
         mask = mc.point([255 if v >= 255 - snap_tol else 0 for v in range(256)])
         white = Image.new("RGB", img.size, (255, 255, 255))
         img = Image.composite(white, img.convert("RGB"), mask)
 
     # 2) 按主体包围盒重排画布到目标占比
-    mc2 = _min_channel(img)
-    lut = [255 if v < 255 - args.tolerance else 0 for v in range(256)]
-    bbox = mc2.point(lut).getbbox()
+    bbox = _product_bbox(img, _bg_color(img), tol=max(12, args.tolerance + 9))
     if bbox:
         product = img.crop(bbox)
         pw, ph = product.size
         side = int(max(pw, ph) / target)
-        canvas_bg = (255, 255, 255) if p["white_fail"] is not None else _dominant_bg(img, bbox)
+        canvas_bg = ((255, 255, 255)
+                     if (p["white_fail"] is not None or p.get("white_target"))
+                     else _dominant_bg(img, bbox))
         canvas = Image.new("RGB", (side, side), canvas_bg)
         canvas.paste(product, ((side - pw) // 2, (side - ph) // 2))
         img = canvas
@@ -210,7 +234,7 @@ def fix(img, plt_name, out_path, args):
 
 
 def _dominant_bg(img, bbox):
-    """取包围盒外的主色，作为 ML 画布底色（保持原背景感）。"""
+    """取包围盒外的主色，作为画布底色（保持原背景感）。"""
     w, h = img.size
     x0, y0, x1, y1 = bbox
     strips = [img.crop((0, 0, w, max(1, y0))), img.crop((0, y1, w, h)),
@@ -233,7 +257,7 @@ def main():
     ap = argparse.ArgumentParser(description="商品主图像素级合规校验")
     ap.add_argument("image")
     ap.add_argument("--platform", required=True, choices=list(PLATFORMS),
-                    help="shopee / mercadolivre / amazon")
+                    help="tiktok_th（TikTok Shop 泰国站）")
     ap.add_argument("--tolerance", type=int, default=3, help="近白判定容差（默认 3）")
     ap.add_argument("--fix", metavar="OUT", help="自动修复并保存到指定路径")
     ap.add_argument("--json", action="store_true", help="输出 JSON")

@@ -1,4 +1,4 @@
-# 案例 · Patinete Elétrico 500W 评论分析（Shopee 巴西站）
+# 案例 · Patinete Elétrico 500W 评论分析（TikTok Shop 泰国站）
 
 > **案例类型**：真实数据 · 已脱敏
 > **使用模块**：07 Review Analysis Agent
@@ -232,7 +232,7 @@
 
 ### 6.1 新增/修改条目（→ 03 Listing）
 
-| # | 对应差评 | 写入位置 | 文案（PT-BR） | 中文说明 |
+| # | 对应差评 | 写入位置 | 文案（泰语） | 中文说明 |
 |---|---|---|---|---|
 | 1 | 误解型 #1 | 段 6 · **首条** | `Indicado para 1 pessoa. Capacidade máxima de 150 kg (piloto + bagagem).` | 明确单人乘坐 |
 | 2 | 误解型 #2 | 段 6 · 首条 | `Indicado para vias planas e pavimentadas e ladeiras leves.` | 从 `usage_scope` 前置 |
@@ -246,10 +246,10 @@
 
 ### 6.2 需要补的图（→ 04 Product Image）
 
-| # | 对应差评 | 图位 | 图内文案（PT-BR） | 说明 |
+| # | 对应差评 | 图位 | 图内文案（泰语） | 说明 |
 |---|---|---|---|---|
 | 1 | 配件缺失 #1 #2 | 图 8 · 包装清单图 | `Não incluso: capacete, bomba de ar` | **用图代替文字**——文字说明会被跳过 |
-| 2 | 使用困难 #1 | 新增图 10 · 组装指引图 | 分步图 `1 · 2 · 3` | ML 允许 12 张，Shopee 需替换低价值图 |
+| 2 | 使用困难 #1 | 新增图 10 · 组装指引图 | 分步图 `1 · 2 · 3` | ML 允许 12 张，TikTok Shop 需替换低价值图 |
 | 3 | 误解型 #2 | 图 4 · 场景图 | 小字 `Vias pavimentadas` | 场景图加边界说明 |
 | 4 | 参数不符 #1 | 图 3 · 参数图 | 续航项下加 `(piloto 70 kg, piso plano)` | 参数图补测试条件 |
 

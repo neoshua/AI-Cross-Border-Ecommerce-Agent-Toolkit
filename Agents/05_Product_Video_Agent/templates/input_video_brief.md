@@ -8,7 +8,7 @@
 
 ```yaml
 platform*: shopee              # shopee | mercadolivre | amazon | tiktokshop | shopify
-target_market*: 巴西
+target_market*: 泰国
 durations*: [15, 30]           # 可选 [15] / [30] / [15, 30]
 mode*: standard                # standard | variant
 production_mode*: mixed        # ai_generated | real_shoot | mixed

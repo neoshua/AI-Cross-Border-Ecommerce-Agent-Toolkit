@@ -1,4 +1,4 @@
-# 案例 · Carregador Portátil 20000mAh 45W（Shopee 巴西站）
+# 案例 · Carregador Portátil 20000mAh 45W（TikTok Shop 泰国站）
 
 > **案例类型**：真实产品 · 已脱敏（无店铺名、无账号、无未授权品牌词）
 > **使用模块**：03 Listing Creative Agent
@@ -11,12 +11,12 @@
 | 项 | 内容 |
 |---|---|
 | 产品 | 20000mAh 45W 快充充电宝，带数字显示屏，3 输出口 |
-| 市场 | 巴西（Shopee BR） |
+| 市场 | 泰国（TikTok Shop TH） |
 | 类目 | 电池 / 充电类 |
 | 定位 | 引流款，主推广告品 |
 | 上架背景 | 新品冷启动，需要一套能撑起点击率的 Listing |
 
-**为什么选这个案例**：巴西站充电宝类目竞争激烈，是"标题写法差异直接反映在点击率上"的典型类目；同时它有明确的**误解型差评**（买家以为含数据线），可以用来演示"评论 → 详情页"的闭环。
+**为什么选这个案例**：泰国站充电宝类目竞争激烈，是"标题写法差异直接反映在点击率上"的典型类目；同时它有明确的**误解型差评**（买家以为含数据线），可以用来演示"评论 → 详情页"的闭环。
 
 ---
 
@@ -26,7 +26,7 @@
 
 ```yaml
 platform: shopee
-target_market: 巴西
+target_market: 泰国
 mode: single
 
 product_name: "Carregador Portátil"
@@ -96,7 +96,7 @@ brand_authorization: []      # 无任何品牌授权
 ## 三、AI 处理流程
 
 ```text
-[Step 1] 00_system.md                    → 载入角色、平台规则(120字符)、PT-BR 输出规则、合规守卫
+[Step 1] 00_system.md                    → 载入角色、平台规则(120字符)、泰语 输出规则、合规守卫
 [Step 2] 01_keyword_to_title.md          → 三榜 84 词合并去重 → 七类分词 → 3 个备选标题
 [Step 3] 02_description_builder.md       → 详情页 7 段 + 卖点分层 + 参数一致性校验
 [Step 4] 03_compliance_guard.md          → 合规扫描 → 命中 3 条 → 改写 → 二次扫描确认零命中
@@ -232,7 +232,7 @@ usage_scope_confirmed:
 
 ## 六、其他平台版本（同一产品）
 
-### Mercado Livre（60 字符上限，需大幅精简）
+### TikTok Shop（60 字符上限，需大幅精简）
 
 | # | 标题 | 字符数 |
 |---|---|---|
@@ -241,7 +241,7 @@ usage_scope_confirmed:
 **砍词过程**：`Viagem`（场景词，首个被砍）→ `Turbo Carga Rápida`（功能词，与 45W 语义重复）→ 保留 `Carregador Portátil`（核心词）+ `20000mAh 45W`（参数）+ `3 Saídas Display Digital`（功能）。
 **主关键词与核心参数一个都没砍**——符合 ML 的砍词优先级规则。
 
-⚠️ **ML 图片规范与 Shopee 冲突**：ML 主图禁止出现任何文字与水印，而 Shopee 主图习惯打卖点文字。因此 04 Product Image Agent 需要输出**两套主图方案**，不能复用。
+⚠️ **ML 图片规范与 TikTok Shop 冲突**：ML 主图禁止出现任何文字与水印，而 TikTok Shop 主图习惯打卖点文字。因此 04 Product Image Agent 需要输出**两套主图方案**，不能复用。
 
 ---
 
@@ -265,7 +265,7 @@ usage_scope_confirmed:
 | **Agent 能守住参数真实性的底线** | 全程 0 次 `[PARAM_DROPPED]`，因为所有数值都来自 `spec_table` |
 | **合规守卫是有效的** | 拦截了 4 条，包括 1 条高危的未授权品牌词 |
 | **评论能反向修复 Listing** | 2 条误解型差评 → 2 条前置说明，且这两条说明在优化建议里被列为本案例最高收益项 |
-| **跨平台不能简单复制** | 同一个商品，Shopee 100 字符 vs ML 57 字符；且主图规范直接冲突 |
+| **跨平台不能简单复制** | 同一个商品，TikTok Shop 100 字符 vs ML 57 字符；且主图规范直接冲突 |
 | **上限在人不在模型** | Agent 只能保证"输出 = 输入"，参数本身是否真实，是使用者的责任 |
 
 ---

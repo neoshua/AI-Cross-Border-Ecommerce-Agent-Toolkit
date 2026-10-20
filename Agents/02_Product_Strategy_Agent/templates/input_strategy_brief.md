@@ -24,7 +24,7 @@ decision_notes: ""             # 决策依据备注
 
 ```yaml
 platform*: shopee
-target_market*: 巴西
+target_market*: 泰国
 category*: ""
 ```
 
@@ -69,7 +69,7 @@ cost_structure*:
   return_rate: 0.02            # SOP 规定 2%
   ad_rate: 0.05                # 大件 ~5% / 小件 5–10%
   target_margin_rate: 0.32     # 大件 30–35% / 小件 25–30%
-  tax_rate: 0.00               # ⚠️ 巴西税费；填 0 时报告会标注"未含税费"
+  tax_rate: 0.00               # ⚠️ 泰国税费；填 0 时报告会标注"未含税费"
 
 sku_costs*:
   - sku_role: "引流款"

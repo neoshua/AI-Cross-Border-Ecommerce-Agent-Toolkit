@@ -26,7 +26,7 @@ metadata:
 
 ```bash
 # 标题校验（字符数是实测值）
-python scripts/title_lint.py "标题文本" --platform shopee \
+python scripts/title_lint.py "标题文本" --platform tiktok_th \
     --forbidden "iPhone,Samsung" --keywords "carregador,20000mah,45w"
 
 # 参数一致性：文案里每个数字必须溯源到 spec_table
@@ -43,17 +43,21 @@ python scripts/spec_consistency.py --spec examples/spec_table.csv \
 
 ### title_lint.py（按平台规则卡）
 
-| 检查 | Shopee | Mercado Livre | Amazon |
-|---|---|---|---|
-| 字符上限 | 120 | **60** | 200 |
-| 前 30 字符 | ✅ 单独输出（权重最高段） | — | — |
-| 促销词 | ⚠️ 谨慎 | ⚠️ 明确不建议 | ⚠️ |
-| 表情符号 | ❌ 禁 | ⚠️ | ⚠️ |
-| 全大写堆砌 | ⚠️ | ⚠️ | ⚠️ |
-| 重复词 ≥3 次 | ❌ 堆砌降权 | ❌ | ⚠️ |
-| 中文字符混入 | ❌（PT-BR 站） | ❌ | ❌ |
-| 禁用词 | ❌（自备清单：未授权品牌词/绝对化用语） | ❌ | ❌ |
-| 核心词覆盖 | ⚠️ 缺词提醒 | ⚠️ | ⚠️ |
+| 检查 | 阈值 / 行为 | 级别 |
+|---|---|---|
+| 字符长度 | **25–255**（低于 25 也算不达标） | ❌ FAIL |
+| 前 40 字符 | 单独输出（移动端首屏可见段，主关键词必须在这） | ℹ️ INFO |
+| 促销词 | `ส่งฟรี` / `ลดราคา` / `โปรโมชั่น` / sale … | ❌ FAIL |
+| 绝对化宣称 | `ถูกที่สุด` / `ขายดีที่สุด` / best seller … | ⚠️ WARN |
+| 表情符号 | emoji 与装饰性特殊字符 | ❌ FAIL |
+| 全大写堆砌 | 品牌缩写以外的全大写词 | ⚠️ WARN |
+| 重复词 **≥4 次** | 有空格按分词统计，无空格用 12/10/8/6 字滑窗兜底 | ❌ FAIL |
+| 变体 / 库存表述 | `มี 5 สี` / `in stock` / `พร้อมส่ง` | ⚠️ WARN |
+| 二手商品前缀 | 泰国站强制 `[Second-hand]` 开头 | ❌ FAIL |
+| 中文字符混入 | 买家可见文本必须是泰语 | ❌ FAIL |
+| 无泰文字符 | 纯英文标题拿不到自然流量 | ⚠️ WARN |
+| 禁用词 | 自备清单（未授权品牌词 / 类目敏感词） | ❌ FAIL |
+| 核心词覆盖 | 缺词提醒 | ⚠️ WARN |
 
 ### spec_consistency.py
 
@@ -62,7 +66,7 @@ python scripts/spec_consistency.py --spec examples/spec_table.csv \
 | **参数漂移** | 文案里每个数字溯源到 spec_table；溯不到 = 笔误/编造/口径不一致 |
 | **参数漏讲** | spec_table 里有数字的参数在文案中从未出现 → 提醒补内容 |
 
-支持巴西数字格式（`20.000` = 20000）与 `--allow` 豁免（年份等无关常量）。
+支持泰国数字格式（`20.000` = 20000）与 `--allow` 豁免（年份等无关常量）。
 
 ---
 

@@ -1,14 +1,14 @@
-# 案例 · Bolsa Transportadora para Pets（Mercado Livre 巴西站）
+# 案例 · Bolsa Transportadora para Pets（TikTok Shop 泰国站站）
 
 > ⚠️ **规则更新说明（2026-10）**：本案例写作时 ML 要求主图纯白底。
 > **现行规则已放宽**——白/纯色/实景按类目，但「背景干净 + 首图禁促销文字」不变。
 > 本案例的白底方案仍是宠物用品类目的**最安全选择**，可继续使用；
-> 最新规则见 [`../references/platform-mercadolivre.md`](../references/platform-mercadolivre.md)。
+> 最新规则见 [`../references/platform-tiktok-th.md`](../references/platform-tiktok-th.md)。
 
 > **案例类型**：真实产品 · 已脱敏
 > **使用模块**：04 Product Image Agent（上游依赖 03 Listing Creative）
 > **对应 SOP**：3.3 9 张电商图片生成逻辑
-> **重点演示**：ML 与 Shopee 的**主图规范冲突**处理
+> **重点演示**：ML 与 TikTok Shop 的**主图规范冲突**处理
 
 ---
 
@@ -17,12 +17,12 @@
 | 项 | 内容 |
 |---|---|
 | 产品 | 宠物外出便携包，可折叠软箱式，透气网面，肩背两用 |
-| 市场 | 巴西（站点：Mercado Livre） |
+| 市场 | 泰国（站点：TikTok Shop） |
 | 类目 | 母婴 / 宠物 |
 | 定位 | 常规款 |
 | 视觉调性 | 温柔、软质、浅色系 |
 
-**为什么选这个案例**：宠物类目是典型的「尺寸不符预期」差评高发区——买家对"能装多大的狗/猫"没有概念，尺寸图做不好直接退货。同时 ML 首图禁促销文字与平台属性词（比 Shopee 严），和 Shopee 的常规做法直接冲突，正好演示 `platform_variant`。
+**为什么选这个案例**：宠物类目是典型的「尺寸不符预期」差评高发区——买家对"能装多大的狗/猫"没有概念，尺寸图做不好直接退货。同时 ML 首图禁促销文字与平台属性词（比 TikTok Shop 严），和 TikTok Shop 的常规做法直接冲突，正好演示 `platform_variant`。
 
 ---
 
@@ -30,7 +30,7 @@
 
 ```yaml
 platform: mercadolivre
-target_market: 巴西
+target_market: 泰国
 mode: standard
 prompt_language: en
 has_product_photo: true
@@ -99,16 +99,16 @@ certifications: []             # 留空 → 不生成任何认证图
 | **8** | 包装清单图 | 含什么 / 不含什么 | 消除纠纷 | **实拍**平铺俯拍 | `Não incluso: comedouro` | 22 |
 | **9** | 售后/保修图 | 保修与客服 | 信任 | 深灰底排版图 | `3 meses · Garantia legal` | — |
 
-**关键判断**：图 1 在 ML 上必须是**零文字**——这是本案例和 Shopee 版本最大的差异。
+**关键判断**：图 1 在 ML 上必须是**零文字**——这是本案例和 TikTok Shop 版本最大的差异。
 
 ### 4.2 平台差异方案
 
 | 方案 | 适用平台 | 主图 | 说明 |
 |---|---|---|---|
-| **A** | **Mercado Livre** / Amazon | 纯白底，**无任何文字** | ✅ 本案例采用 |
-| B | Shopee / TikTok Shop | 白底 + 文字徽章（`3 Lados de Tela`） | 站内提升点击率的常见做法 |
+| **A** | **首图** | 纯白底，**无任何文字** | ✅ 本案例采用（TikTok 强制） |
+| B | 第 3–6 图 | 白底 + 泰语文字徽章（`ผ้า 3 ด้าน`） | 站内提升点击率的常见做法 |
 
-⚠️ **冲突点**：Shopee 版本的主图如果直接上传到 ML，会被判违规（主图含文字）→ 可能被下架或要求整改。**两套素材必须分开管理。**
+⚠️ **冲突点**：TikTok Shop 版本的主图如果直接上传到 ML，会被判违规（主图含文字）→ 可能被下架或要求整改。**两套素材必须分开管理。**
 
 ### 4.3 出图 Prompt（节选三张）
 
@@ -282,7 +282,7 @@ forbidden_words:            # 透传给 05，做字幕硬拦截
 
 | 结论 | 证据 |
 |---|---|
-| **平台规范冲突必须显式处理** | ML 零文字 vs Shopee 带卖点，同一商品两套主图 |
+| **平台规范冲突必须显式处理** | ML 零文字 vs TikTok Shop 带卖点，同一商品两套主图 |
 | **有些图不能用 AI 生成** | 图 8 包装清单必须实拍，AI 生成=配件缺失差评 |
 | **负面 Prompt 是防御手段** | `rain, water, wet fur` 直接挡住了"暗示防水"的虚假宣传风险 |
 | **信息排版图 ≠ AI 出图** | 图 3/7/9 输出「版式规格」比输出 Prompt 更有用 |

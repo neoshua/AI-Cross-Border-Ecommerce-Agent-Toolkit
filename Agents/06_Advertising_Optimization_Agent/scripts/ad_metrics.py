@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""广告决策层算术脚本（Shopee / Mercado Livre 广告）—— 只算，不猜，不执行。
+"""广告决策层算术脚本（TikTok Shop 泰国站广告）—— 只算，不猜，不执行。
 
   python ad_metrics.py calc --price 113.40 --product-cost 55 --commission 14 \
       --return 2 --tax 0 --target-acos 25 --cvr 0.44
@@ -99,7 +99,7 @@ COLUMN_MAP = {
 
 
 def _num(v, default=0.0, kind="dec"):
-    """容忍 'R$ 1.234,56' / '1,234' / '1.500' / '12.3%' / '-' / 空串。
+    """容忍 '฿ 1.234,56' / '1,234' / '1.500' / '12.3%' / '-' / 空串。
 
     kind="int"（曝光/点击/订单）：点、逗号一律视为千分位，只留数字。
     kind="dec"（花费/销售额）：
@@ -108,7 +108,7 @@ def _num(v, default=0.0, kind="dec"):
     """
     if v is None:
         return default
-    s = str(v).strip().replace("R$", "").replace("%", "").replace(" ", "")
+    s = str(v).strip().replace("฿", "").replace("%", "").replace(" ", "")
     if s in ("", "-", "—", "暂无", "N/A", "nan"):
         return default
     neg = s.startswith("-")
@@ -278,10 +278,10 @@ def cmd_diagnose(args):
     if not args.json:
         icon = {"P0": "🔴", "P1": "🟡", "P2": "🟢", "INFO": "⚪"}
         print(f"\n盈亏线 ROAS {be_roas} ｜ 目标 ROAS {target_roas} ｜ "
-              f"整体 ROAS {out['total']['roas']} ｜ 整体净贡献 R$ {out['total']['net_contribution']}\n")
+              f"整体 ROAS {out['total']['roas']} ｜ 整体净贡献 ฿ {out['total']['net_contribution']}\n")
         for c in out["campaigns"]:
             print(f"{icon[c['grade']]} [{c['grade']}] {c['campaign']}  "
-                  f"ROAS {c['roas'] if c['roas'] else '-'}  花费 R$ {c['spend']}  订单 {c['orders']:g}")
+                  f"ROAS {c['roas'] if c['roas'] else '-'}  花费 ฿ {c['spend']}  订单 {c['orders']:g}")
             for a in c["actions"]:
                 print(f"     · {a}")
             print()
@@ -293,7 +293,7 @@ def main():
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     c = sub.add_parser("calc", help="由成本结构算盈亏线 / 可承受 CPC")
-    c.add_argument("--price", type=float, required=True, help="售价 R$")
+    c.add_argument("--price", type=float, required=True, help="售价 ฿")
     c.add_argument("--product-cost", type=float, required=True)
     c.add_argument("--shipping", type=float, default=0, help="尾程运费")
     c.add_argument("--first-leg", type=float, default=0, help="头程运费")
@@ -302,7 +302,7 @@ def main():
     c.add_argument("--return", dest="return_rate", type=float, default=None, help="退货损耗 %%（覆盖预设）")
     c.add_argument("--tax", type=float, default=None, help="综合有效税率 %%（巴西税制自行折算）")
     c.add_argument("--extra-pct", type=float, default=None, help="平台附加 %%（如免运计划；覆盖预设）")
-    c.add_argument("--fixed-fee", type=float, default=None, help="按件固定费 R$（覆盖预设阶梯）")
+    c.add_argument("--fixed-fee", type=float, default=None, help="按件固定费 ฿（覆盖预设阶梯）")
     c.add_argument("--target-acos", type=float, help="目标 ACoS %%")
     c.add_argument("--cvr", type=float, help="转化率 %%（算可承受 CPC 用）")
 

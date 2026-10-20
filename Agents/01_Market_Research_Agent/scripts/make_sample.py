@@ -73,9 +73,9 @@ def dirty(v) -> str:
         if style == "plain":
             return f"{v:.2f}"
         if style == "currency":
-            return f"R$ {v:,.2f}"
+            return f"฿ {v:,.2f}"
         if style == "currency_comma_dot":
-            return f"R$ {v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+            return f"฿ {v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         return f"{v:.2f}"
     # int
     if style == "thousands_dot":
@@ -83,7 +83,7 @@ def dirty(v) -> str:
     if style == "thousands_comma":
         return f"{v:,}"
     if style == "currency":
-        return f"R$ {v:,}".replace(",", ".")
+        return f"฿ {v:,}".replace(",", ".")
     if style == "plain":
         return str(v)
     return str(v)

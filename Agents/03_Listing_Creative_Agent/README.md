@@ -3,12 +3,12 @@
 **商品内容生成智能体** · 从一堆散乱关键词，到一套可直接上架的 Listing。
 
 > **Skill 化（v0.4）**：新增发布前合规校验脚本与 Agent 入口
-> [`SKILL.md`](SKILL.md)。**字符数是 `len()` 实测值**（PT-BR 的 `á` 是 2 字节，
+> [`SKILL.md`](SKILL.md)。**字符数是 `len()` 实测值**（泰语 的 `á` 是 2 字节，
 > 按字节算会误判超限）：
 >
 > ```bash
 > # 标题合规（超限/禁用词/促销词/堆砌/核心词覆盖）
-> python scripts/title_lint.py "标题" --platform shopee --forbidden "iPhone,Samsung"
+> python scripts/title_lint.py "标题" --platform tiktok_th --forbidden "iPhone,Samsung"
 > # 参数一致性（文案里每个数字必须溯源到 spec_table）
 > python scripts/spec_consistency.py --spec examples/spec_table.csv --text 详情.md
 > ```
@@ -132,7 +132,7 @@ SOP 3.3 说 Listing 的目标是"让商品页面具备点击和转化能力"。�
 |---|---|
 | [`templates/input_product_brief.md`](./templates/input_product_brief.md) | 标准输入：产品资料 + 关键词三榜 + 合规声明 |
 | [`templates/output_listing_pack.md`](./templates/output_listing_pack.md) | 标准输出：完整素材包结构 |
-| [`examples/powerbank_20000mah.md`](./examples/powerbank_20000mah.md) | 真实案例：Carregador Portátil 20000mAh 45W（Shopee 巴西站） |
+| [`examples/powerbank_20000mah.md`](./examples/powerbank_20000mah.md) | 真实案例：Carregador Portátil 20000mAh 45W（TikTok Shop 泰国站） |
 
 ---
 
@@ -145,7 +145,7 @@ SOP 3.3 说 Listing 的目标是"让商品页面具备点击和转化能力"。�
 | **不做定价** | 这是 02 Product Strategy 的职责 |
 | **不校验真实参数** | Agent 只能保证"输出与输入一致"，无法判断输入本身是否真实。**参数真实性由你负责** |
 | **平台规则可能滞后** | 仓库里的字数限制是编写时的公开规则，**发布前必须到卖家中心复核** |
-| **母语质量有上限** | PT-BR 输出质量取决于模型；高价值 listing 建议让母语者过一遍 |
+| **母语质量有上限** | 泰语 输出质量取决于模型；高价值 listing 建议让母语者过一遍 |
 
 ---
 
@@ -154,12 +154,12 @@ SOP 3.3 说 Listing 的目标是"让商品页面具备点击和转化能力"。�
 见 [`examples/powerbank_20000mah.md`](./examples/powerbank_20000mah.md)。摘要：
 
 ```text
-输入：20000mAh 45W 充电宝，巴西站，关键词三榜共 84 个词
+输入：20000mAh 45W 充电宝，泰国站，关键词三榜共 84 个词
   ↓
 关键词分类：核心词 3 个 / 参数词 11 个 / 人群词 4 个 /
             功能词 8 个 / 场景词 6 个 / 配件词 5 个 / 风险词 6 个（隔离）
   ↓
-标题（Shopee BR，115/120 字符，`title_lint.py` 实测）：
+标题（TikTok Shop TH，115/120 字符，`title_lint.py` 实测）：
   Carregador Portátil 20000mAh 45W Turbo Carga Rápida 3 Saídas
   com Display Digital para Celular iPhone Android Viagem
   ↓

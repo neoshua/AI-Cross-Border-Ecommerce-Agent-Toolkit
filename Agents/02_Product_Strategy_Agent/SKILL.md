@@ -1,8 +1,8 @@
 ---
 name: sop-ecom-pricing
 description: >-
-  SKU 定价算术 Skill，Shopee 巴西 / Mercado Livre。到岸成本 → 净利率 / 盈亏平衡价 /
-  目标价反算 / 价格阶梯 / 优惠券余量（含巴西税费项）。当用户要算毛利、定价、
+  SKU 定价算术 Skill，TikTok Shop 泰国站。到岸成本 → 净利率 / 盈亏平衡价 /
+  目标价反算 / 价格阶梯 / 优惠券余量（含泰国税费项）。当用户要算毛利、定价、
   盈亏价、该发多少券、SKU 结构是否合理时使用。中文「算毛利 / 定价 / 盈亏价 / 发券」同样触发。
   NOT for 竞品定价调研、市场价格带分析（那是 01 的活）。
 allowed-tools:
@@ -26,11 +26,11 @@ metadata:
 ```bash
 # 平台预设（推荐）：费率来自 scripts/platform_fees.json，含价格分档佣金/固定费
 # 可用平台：shopee_br / mercadolivre_br / mercadolivre_br_premium / amazon_br / tiktok_br
-python scripts/sku_pricing.py calc --platform shopee_br --cost 935 --price 2199
+python scripts/sku_pricing.py calc --platform tiktok_th_br --cost 935 --price 2199
 python scripts/sku_pricing.py --list-platforms          # 查看全部预设与费率来源
 
 # 多 SKU 矩阵 + 价格阶梯 + 券余量（读 CSV）
-python scripts/sku_pricing.py matrix --file examples/sample-skus.csv --platform mercadolivre_br
+python scripts/sku_pricing.py matrix --file examples/sample-skus.csv --platform tiktok_th_br
 
 # 手工口径（兼容旧用法，显式参数永远优先于预设）
 python scripts/sku_pricing.py calc --cost 935 --price 2199 \
@@ -64,4 +64,4 @@ python scripts/sku_pricing.py matrix --file examples/sample-skus.csv \
 
 1. **引流款净利率低于目标是策略不是事故** —— 但脚本会提醒你确认，且它必须高于盈亏平衡价
 2. **高配款净利率常常低于主推款**（成本涨得比售价快）—— 脚本会提示检查
-3. **税费别漏** —— `--tax 8` 就能把盈亏价抬高近三成，按自己的巴西税制折算填入
+3. **税费别漏** —— `--tax 8` 就能把盈亏价抬高近三成，按自己的泰国税制折算填入

@@ -11,7 +11,7 @@
 > python scripts/sku_pricing.py matrix --file examples/sample-skus.csv --target-margin 32
 > ```
 >
-> 公式与税费口径见 [`references/pricing-rules.md`](references/pricing-rules.md)。**含巴西税费项。**
+> 公式与税费口径见 [`references/pricing-rules.md`](references/pricing-rules.md)。**含泰国税费项。**
 
 ---
 
@@ -154,7 +154,7 @@ P = (产品成本 + 尾程物流 + 仓储费) ÷ (1 − 佣金率 − 广告率 
 |---|---|
 | **不做选品决策** | 需人工确认 `decision_approved` |
 | **不核价** | 成本结构由人填，Agent 无法验证采购价真伪 |
-| **不算税费** | 巴西税费结构复杂，需在成本结构里自行计入 |
+| **不算税费** | 泰国税费结构复杂，需在成本结构里自行计入 |
 | **不含平台活动规则** | 活动价与库存联动（虾皮活动一旦参加无法退出）属运营执行范畴，本模块只给价格建议 |
 | **卖点收敛依赖上游** | 若 01 未跑，`opportunity_config` 缺失 → 只能给通用卖点，差异化质量下降 |
 | **前期养权重的降幅需人工定** | SOP 说"前期可略低"，具体降几个点取决于现金流与库存，Agent 只给区间 |

@@ -163,7 +163,7 @@
 
 ### 情感强度判定标准
 
-| 强度 | 特征词（葡语示例） | 权重 |
+| 强度 | 特征词（泰语示例） | 权重 |
 |---|---|---|
 | **强** | `excelente` / `perfeito` / `superou` / `melhor que esperava` / `recomendo` | 3 |
 | **中** | `bom` / `funciona bem` / `atende` / `satisfeito` | 2 |

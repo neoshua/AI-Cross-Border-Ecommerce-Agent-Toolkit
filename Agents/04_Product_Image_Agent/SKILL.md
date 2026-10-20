@@ -1,8 +1,8 @@
 ---
 name: sop-ecom-image
 description: >-
-  跨境电商商品图生成 Skill，Shopee 巴西站与 Mercado Livre 专精。9 图框架规划、产品身份锁定、
-  平台规则内置（ML 新规：白底/纯色/实景按类目）、像素级合规校验与自动修复。
+  跨境电商商品图生成 Skill，TikTok Shop 泰国站专精。9 图框架规划、产品身份锁定、
+  平台规则内置（TikTok：首图纯色底优先白色、主体 ≥60%、禁文字水印）、像素级合规校验与自动修复。
   当用户要做商品主图、场景图、详情图、白底图、9 张图、图合规检查、换背景、SKU 换色时使用。
   中文「做图 / 主图 / 场景图 / 详情图 / 合规检查」同样触发。
   NOT for 视频剪辑、纯格式转换、批量压缩。
@@ -16,13 +16,13 @@ metadata:
   license: MIT
 ---
 
-# 04 · Product Image Skill（Shopee BR / Mercado Livre 专精）
+# 04 · Product Image Skill（TikTok Shop 泰国站 专精）
 
 把一张产品照 + 一份参数表，变成**一整套符合平台规范、可直接上架**的商品图。
 
-**与 GitHub 上其它电商生图 Skill 的区别**：它们全部面向 Amazon / 淘宝 / 小红书 / TikTok Shop。
-本 Skill 专精两个平台 —— **Mercado Livre（规则最特殊：按类目区分背景、首图禁无关文字）**
-和 **Shopee 巴西（首图推荐叠字、饱和度高的葡语大字报风格）**，并保留 9 图规划框架。
+**与 GitHub 上其它电商生图 Skill 的区别**：它们全部面向 Amazon / 淘宝 / 小红书。
+本 Skill **只做 TikTok Shop 泰国站** —— 首图纯色底（白色最优）、主体 ≥60%、禁文字与水印、
+9 图全用满、泰国计量类目有强制资质图，并保留 9 图规划框架。
 
 ---
 
@@ -61,8 +61,8 @@ metadata:
 ```text
 1. 产品图 1 张（手机随手拍也行，白底/实景都可）
 2. 参数表 spec_table（尺寸/容量/材质，来自 03 Listing Agent 的输出）
-3. 目标平台：shopee | mercadolivre | amazon
-4. 品类（决定 ML 的背景规则，见平台路由表）
+3. 目标平台：tiktok_th（泰国站，唯一可选）
+4. 品类（决定是否需要强制资质图，如厨房秤、工业秤）
 ```
 
 ---
@@ -78,25 +78,23 @@ metadata:
 
 ## ① 平台规则路由（读对应规则卡，不要凭记忆）
 
-| platform | 规则卡 | 关键差异 |
+| platform | 规则卡 | 关键点 |
 |---|---|---|
-| `shopee` | [references/platform-shopee.md](references/platform-shopee.md) | 首图**推荐叠字**（PT-BR 大字报）、饱和度高、9 图上限、单图 ≤2MB |
-| `mercadolivre` | [references/platform-mercadolivre.md](references/platform-mercadolivre.md) | **背景不再强制纯白**（白/纯色/实景按类目），但首图禁促销文字；占比要求最高（~95%） |
-| `amazon` | [references/platform-amazon.md](references/platform-amazon.md) | 最严：纯白 RGB(255,255,255) 必须 + 主体 ≥85% + 禁一切文字 |
+| `tiktok_th` | [references/platform-tiktok-th.md](references/platform-tiktok-th.md) | 首图纯色底（白色最优）、主体 ≥60%（甜区 80–90%）、**首图禁文字/水印/Logo/边框**、单图 ≤5MB、9 图上限 |
 
-**注意**：三个平台对「首图能不能有字」的答案**互相矛盾**，一套图不能直接复用 ——
-这正是本 Skill 按平台出规则卡的原因。
+**首图能不能有字**：TikTok 泰国站首图**不能**（自动审核直接拒）；文字与卖点放第 2–9 图。
+这条与「首图叠大字报」的老习惯相反，别沿用。
 
 ---
 
 ## ② 图序列规划
 
-规划走的是本仓库的 **9 图框架**（Shopee 上限 9 张，正好逐格规划）。
+规划走的是本仓库的 **9 图框架**（TikTok Shop 上限 9 张，正好逐格规划）。
 
 每个图位（目的 / 构图 / prompt 骨架 / 平台差异）见
 [references/scenarios-9grid.md](references/scenarios-9grid.md)。
 
-ML 没有张数上限（建议 6–8 张），前 5 张按 ML 首图规则执行，其余可用场景图。
+9 张要用满：首图只负责「看得清」，第 2–9 张分别回答尺寸、材质、场景、配件、信任状。
 
 ---
 
@@ -114,8 +112,8 @@ ML 没有张数上限（建议 6–8 张），前 5 张按 ML 首图规则执行
 2. **产品占比必须数字化** —— `product occupies 82% of frame height`
 3. **留白必须显式声明** —— `even 9% margin on all sides`
 4. **否定清单不能省** —— 且必须包含 `must_not_change` 全部条目
-5. **平台预留空间** —— Shopee 首图右上留 12% 给价格角标；ML 首图四边留白
-6. **图内文字三层架构** —— 主标语 ≤4 词 / 卖点 ≤7 词 / 角标仅数字（**仅 Shopee**；ML 首图禁）
+5. **平台预留空间** —— 首图右上留 12% 给价格角标；视频缩略图底部 20% 留空避开 UI
+6. **图内文字三层架构** —— 主标语 ≤4 词 / 卖点 ≤7 词 / 角标仅数字（**仅限第 2–9 图**，首图禁文字）
 7. **批量出图优于反复调参** —— 一次出 5 版选 1，不要逐张精修
 
 ---
@@ -137,8 +135,8 @@ ML 没有张数上限（建议 6–8 张），前 5 张按 ML 首图规则执行
 ## ⑤ 出图后必须过像素校验（不是"看一眼"）
 
 ```bash
-python scripts/check_main_image.py 出图.png --platform mercadolivre
-python scripts/check_main_image.py 出图.png --platform shopee --fix 修复后.png
+python scripts/check_main_image.py 出图.png --platform tiktok_th
+python scripts/check_main_image.py 出图.png --platform tiktok_th --fix 修复后.png
 ```
 
 脚本会**逐像素**检查：尺寸、正方形、主体占比、背景纯净度/均匀度、文件大小，
@@ -157,10 +155,10 @@ clone 后跑一遍即可验证脚本是否正常。
 |---|---|
 | **不做实际渲染** | 本 Skill 输出的是「规划 + Prompt + 校验」，画图交给生图模型（通道 A/B/C） |
 | **图内文字检测不自动** | 有没有违规叠字需要人工确认（OCR 依赖重，暂未内置） |
-| **ML 类目背景规则会变** | 白底/实景按类目划分，出大目录前先去 ML 卖家中心核对当前类目 |
+| **泰国类目必备图会变** | 部分类目需资质/标签图（如厨房秤「Do not use for trading」），出大目录前先去卖家中心核对 |
 | **平台规则为编写时公开值** | 发布前必须到卖家中心复核 |
 | **不替代修图** | 复杂的产品瑕疵修图仍需人工 |
 
 ---
 
-**返回**：[04 模块 README](README.md) · **规则卡**：[Shopee](references/platform-shopee.md) · [Mercado Livre](references/platform-mercadolivre.md) · [9 图场景库](references/scenarios-9grid.md)
+**返回**：[04 模块 README](README.md) · **规则卡**：[TikTok Shop 泰国站](references/platform-tiktok-th.md) · [9 图场景库](references/scenarios-9grid.md)

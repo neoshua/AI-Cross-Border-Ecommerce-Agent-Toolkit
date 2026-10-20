@@ -2,7 +2,7 @@
 
 > **案例类型**：旗舰案例 · 真实产品 · 已脱敏
 > **覆盖模块**：03 Listing Creative → 04 Product Image → 05 Product Video
-> **市场**：Shopee 巴西站（主）+ Mercado Livre（对照）
+> **市场**：TikTok Shop 泰国站（主）+ TikTok Shop（对照）
 > **对应 SOP**：1.8 关键词表 · 3.3 Listing + 9 图 + 详情页结构 · 3.4 多链接启动
 
 **为什么这是旗舰案例**：SOP 1.8 拿它当标题公式的示例产品（原文：`Patinete Elétrico Adulto 500W 150kg com Banco Dobrável para Mobilidade Urbana`），制作说明把它列在五款案例产品里（Electric Scooter），而且它**天然横跨三个模块**——参数多（适合做参数图）、有强场景（适合做场景视频）、有明确安全风险（适合演示合规守卫）。
@@ -14,7 +14,7 @@
 | 项 | 内容 |
 |---|---|
 | 产品 | 500W 电动滑板车，成人款，带座椅、可折叠、前后双减震 |
-| 市场 | 巴西（Shopee BR 主力，ML 对照） |
+| 市场 | 泰国（TikTok Shop TH 主力，ML 对照） |
 | 类目 | 电动出行 |
 | 定位 | 主推款 |
 | 视觉调性 | 力量感、城市动感、冷色调 |
@@ -26,7 +26,7 @@
 | 参数多（功率/续航/承重/轮胎/减震…） | 参数图必须做，且不能堆一起 |
 | 买家最怕"承重虚标""续航虚标" | 详情页必须解释测试条件 |
 | 涉及安全（刹车、灯光、夜间骑行） | **合规红线最密集的类目** |
-| 巴西对电动滑板车有地方性上路规定 | 场景表述不能承诺"合法上路" |
+| 泰国对电动滑板车有地方性上路规定 | 场景表述不能承诺"合法上路" |
 
 ---
 
@@ -50,7 +50,7 @@
 
 ```yaml
 platform: shopee
-target_market: 巴西
+target_market: 泰国
 mode: single
 product_name: "Patinete Elétrico"
 category: "电动出行"
@@ -196,7 +196,7 @@ title_final: "Patinete Elétrico Adulto 500W 150kg com Banco Dobrável e Suspens
 
 | # | 图位 | 承载信息 | 图内文案 | 字数 |
 |---|---|---|---|---|
-| 1 | **主图** | 车体完整 3/4 侧前角度 | **无文字**（ML 版）/ `500W · 150kg`（Shopee 版） | 0 / 14 |
+| 1 | **主图** | 车体完整 3/4 侧前角度 | **无文字**（ML 版）/ `500W · 150kg`（TikTok Shop 版） | 0 / 14 |
 | 2 | 核心卖点图 | 500W 电机 + 150kg 承重 | `Motor 500W · Suporta 150 kg` | 28 |
 | 3 | 参数规格图 | 关键参数可视化 | 功率/电池/续航/速度/承重 | — |
 | 4 | 场景图 A | 城市通勤 | `Mobilidade urbana` | 17 |
@@ -210,8 +210,8 @@ title_final: "Patinete Elétrico Adulto 500W 150kg com Banco Dobrável e Suspens
 
 | 方案 | 平台 | 主图 |
 |---|---|---|
-| **A** | Mercado Livre / Amazon | 纯白底 + **零文字**（ML 禁止主图出现文字） |
-| **B** | Shopee / TikTok Shop | 白底 + `500W · 150kg`（站内提升点击率） |
+| **A** | **首图** | 纯白底 + **零文字**（TikTok 首图禁文字，会被自动审核拒） |
+| **B** | 第 2–6 图 | 白底 + `500W · 150kg` 泰语标注（站内提升点击率） |
 
 ⚠️ **不可复用**。ML 主图带文字会被判违规。
 
@@ -350,8 +350,8 @@ cluttered background, traffic, visible license plate
 
 | 平台 | 标题 | 字符数 |
 |---|---|---|
-| Shopee | `Patinete Elétrico Adulto 500W 150kg com Banco Dobrável e Suspensão para Mobilidade Urbana` | **89/120** |
-| **Mercado Livre** | `Patinete Elétrico Adulto 500W 150kg com Banco Dobrável` | **54/60** |
+| TikTok Shop | `Patinete Elétrico Adulto 500W 150kg com Banco Dobrável e Suspensão para Mobilidade Urbana` | **89/120** |
+| **TikTok Shop** | `Patinete Elétrico Adulto 500W 150kg com Banco Dobrável` | **54/60** |
 
 **ML 的砍词过程**（按 ML 的砍词优先级：场景词 → 人群词 → 主关键词与核心参数永不砍）：
 

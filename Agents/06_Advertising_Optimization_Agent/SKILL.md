@@ -1,8 +1,8 @@
 ---
 name: sop-ecom-ads
 description: >-
-  跨境电商广告决策层 Skill，Shopee 巴西与 Mercado Livre 专精。读广告导出报表 →
-  像素级算术（盈亏线 ROAS / 可承受 CPC / 净贡献，含巴西税费）→ P0/P1/P2 分级动作清单。
+  跨境电商广告决策层 Skill，TikTok Shop 泰国站专精。读广告导出报表 →
+  像素级算术（盈亏线 ROAS / 可承受 CPC / 净贡献，含泰国税费）→ P0/P1/P2 分级动作清单。
   只建议，不执行 —— 不改后台、不自动调价。当用户要诊断广告、看 ROAS/ACOS、
   降预算降出价、广告亏钱分析、大促复盘时使用。中文「广告诊断 / 广告亏钱 / 预算怎么调」同样触发。
   NOT for 自动调价机器人、直接写平台后台、视频广告创意制作。
@@ -35,7 +35,7 @@ metadata:
 
 ```bash
 # 1) 算盈亏线与可承受 CPC —— 平台预设（与 02 共用 platform_fees.json，含价格分档固定费）
-python scripts/ad_metrics.py calc --platform shopee_br --price 113.40 --product-cost 55 \
+python scripts/ad_metrics.py calc --platform tiktok_th_br --price 113.40 --product-cost 55 \
     --target-acos 25 --cvr 0.44
 
 #    或手工口径（显式参数优先）
@@ -47,7 +47,7 @@ python scripts/ad_metrics.py diagnose --file examples/sample-ad-report.csv \
     --price 113.40 --product-cost 55 --commission 14 --return 2 --tax 0 --target-acos 25
 ```
 
-`--tax` 是**综合有效税率**（巴西 ICMS/PIS/COFINS/Simples Nacional 折算成占售价百分比）。
+`--tax` 是**综合有效税率**（泰国 ICMS/PIS/COFINS/Simples Nacional 折算成占售价百分比）。
 税率 8% 时盈亏线 ROAS 从 2.82 抬到 3.64 —— **不含税的盈亏线是骗人的**。
 
 ---
@@ -75,12 +75,12 @@ python scripts/ad_metrics.py diagnose --file examples/sample-ad-report.csv \
 完整规则表见 [references/diagnosis.md](references/diagnosis.md)；
 公式与列名映射见 [references/metrics.md](references/metrics.md)；
 8 个场景手册见 [references/playbooks.md](references/playbooks.md)；
-动作库（条件/幅度/频率/回滚 + Shopee 预算节律与"不要暂停"铁律）见
+动作库（条件/幅度/频率/回滚 + TikTok Shop 预算节律与"不要暂停"铁律）见
 [references/actions.md](references/actions.md)。
 
 ---
 
-## Shopee BR 特别约束（自动化必知）
+## TikTok Shop TH 特别约束（自动化必知）
 
 | 规则 | 内容 |
 |---|---|
@@ -96,6 +96,6 @@ python scripts/ad_metrics.py diagnose --file examples/sample-ad-report.csv \
 |---|---|
 | **不执行** | 动作清单给人审批；写后台属路线 B，未实现 |
 | 搜索词报告未接 | 搜索词/否定词分析需平台导出（sqp 框架待补，见 ROADMAP） |
-| 阈值为巴西站经验值 | CTR 3–5% 等基准来自 SOP 与实战，不同类目需校准 |
+| 阈值为泰国站经验值 | CTR 3–5% 等基准来自 SOP 与实战，不同类目需校准 |
 | 税率为简化口径 | 综合有效税率一个参数，不代表真实税制明细 |
-| 无公开 API 平台 | Shopee 卖家侧无广告 API → 数据靠手动导出或浏览器自动化 |
+| 无公开 API 平台 | TikTok Shop 卖家侧无广告 API → 数据靠手动导出或浏览器自动化 |

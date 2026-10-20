@@ -2,11 +2,11 @@
 
 > ⚠️ **规则更新说明（2026-10）**：案例中「ML 主图纯白底」为旧规。
 > 现行：白/纯色/实景**按类目**，但背景必须干净、首图禁促销文字。
-> 见 [`../Agents/04_Product_Image_Agent/references/platform-mercadolivre.md`](../../Agents/04_Product_Image_Agent/references/platform-mercadolivre.md)。
+> 见 [`../Agents/04_Product_Image_Agent/references/platform-tiktok-th.md`](../../Agents/04_Product_Image_Agent/references/platform-tiktok-th.md)。
 
 > **案例类型**：真实产品 · 已脱敏
 > **覆盖模块**：03 Listing Creative（`mode = iterate`）+ 06 Advertising（预演）
-> **市场**：Shopee 巴西站
+> **市场**：TikTok Shop 泰国站
 > **对应 SOP**：3.6 广告调整逻辑 · 3.5 广告与评价节奏
 
 ---
@@ -31,7 +31,7 @@
 | 项 | 内容 |
 |---|---|
 | 产品 | 20L 保温包，防水面料，加厚铝箔内衬，可折叠，带加宽加固提手 |
-| 市场 | 巴西（Shopee BR） |
+| 市场 | 泰国（TikTok Shop TH） |
 | 类目 | 箱包 |
 | 定位 | 引流款 |
 | 上架时长 | 3 周 |
@@ -76,7 +76,7 @@ SOP 对"有曝光没点击"给出的优先检查清单：
 
 ```yaml
 platform: shopee
-target_market: 巴西
+target_market: 泰国
 mode: iterate                  # ← 关键：只改必要部分
 
 # ── 现状 ──
@@ -126,7 +126,7 @@ usage_scope_confirmed: ["Transporte de compras do supermercado", "Entrega de com
 - 修改点（最小化）：
     1. 保留白底与产品角度（不推翻重拍）
     2. 增加**视觉差异元素**：把产品置于「半打开状态」，露出内部铝箔层 + 一瓶冰饮
-    3. 增加**一行卖点文字**：`8h de conservação`（不超过 20 字符，Shopee 允许图内文字）
+    3. 增加**一行卖点文字**：`8h de conservação`（不超过 20 字符，TikTok Shop 允许图内文字）
 - 不改动：产品本身、拍摄角度、背景色、价格展示
 - 预期效果：搜索列表中出现「能看懂的差异点」，目标 CTR 提升至 3% 以上
 ```
@@ -135,7 +135,7 @@ usage_scope_confirmed: ["Transporte de compras do supermercado", "Entrega de com
 - **露出内衬 + 冰饮** = 一张图同时回答了"这是什么"和"它能干什么"，这是原主图没做到的
 - **`8h de conservação`** 直接来自 `core_selling_point`，且是竞品详情页才讲、主图没讲的信息——**把详情页的差异化搬到主图上，是提升点击率最直接的办法**
 
-### 6.2 迭代后主图 Prompt（Shopee 版）
+### 6.2 迭代后主图 Prompt（TikTok Shop 版）
 
 ```text
 [SUBJECT] A grey and navy thermal delivery bag, 20L, partially unzipped and open

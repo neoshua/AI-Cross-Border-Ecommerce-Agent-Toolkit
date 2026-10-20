@@ -1,4 +1,4 @@
-# 案例 · Patinete Elétrico 产品策略（Shopee 巴西站）
+# 案例 · Patinete Elétrico 产品策略（TikTok Shop 泰国站）
 
 > **案例类型**：可复现案例 · 接 01 市场分析的输出
 > **使用模块**：02 Product Strategy Agent
@@ -182,7 +182,7 @@ Peças de reposição disponíveis para compra separada.
 
 **费率**：佣金 14% ｜ 广告 5%（大件）｜ 退货 2% ｜ 目标毛利 32%
 
-⚠️ **税费未计入**（巴西税费结构复杂，需按实际方案补充）。**未扣税前的毛利率会高于实际。**
+⚠️ **税费未计入**（泰国税费结构复杂，需按实际方案补充）。**未扣税前的毛利率会高于实际。**
 
 ### 7.2 定价公式与反算
 
@@ -489,7 +489,7 @@ prelaunch_checklist:
 
 pending_confirmations:
   - "供应商能否支持 200kg 承重车架（差异化支点，最关键）"
-  - "巴西税费是否已计入定价"
+  - "泰国税费是否已计入定价"
   - "配件包实际成本"
 ```
 

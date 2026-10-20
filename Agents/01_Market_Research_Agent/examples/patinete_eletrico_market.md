@@ -1,4 +1,4 @@
-# 案例 · Patinete Elétrico 类目分析（Shopee 巴西站）
+# 案例 · Patinete Elétrico 类目分析（TikTok Shop 泰国站）
 
 > **案例类型**：可复现案例 · 数据由本仓库样本脚本生成
 > **使用模块**：01 Market Research Agent（含 `scripts/` 全流程）
@@ -30,7 +30,7 @@ python market_metrics.py ../samples/sample_patinete_eletrico.normalized.json \
 | 项 | 内容 |
 |---|---|
 | 类目 | 电动滑板车（成人款） |
-| 市场 | 巴西（Shopee BR） |
+| 市场 | 泰国（TikTok Shop TH） |
 | 公司资源 | 有现货、有稳定供应商、能处理换货（不做维修） |
 | 成本结构 | 产品成本 `R$ 780` + 尾程 `R$ 130` + 仓储 `R$ 25` = **`R$ 935`** |
 | 目标毛利 | 32%（大件 30–35%） |
@@ -47,7 +47,7 @@ python market_metrics.py ../samples/sample_patinete_eletrico.normalized.json \
 | 是否有现货或即将到货 | ✅ | 有现货 |
 | 是否有稳定供应商 | ✅ | — |
 | 产品成本是否有优势 | ⚠️ | **待确认**：需与同类目头部卖家采购价对比 |
-| 是否适合目标市场 | ✅ | 巴西城市通勤需求强 |
+| 是否适合目标市场 | ✅ | 泰国城市通勤需求强 |
 | 体积重量是否适合仓储物流 | ⚠️ | 单件 18 kg / 90×25×110 cm，属大件，**需确认当前仓储的大件位余量** |
 | 是否有能力处理售后 / 配件 / 退换货 | ⚠️ | 能换货、**不做维修** → 故障类售后会走退货 |
 
@@ -94,7 +94,7 @@ python market_metrics.py ../samples/sample_patinete_eletrico.normalized.json \
 **待确认清单**
 - [ ] 与同类目头部卖家的采购成本对比
 - [ ] 当前仓储大件位余量
-- [ ] 巴西对电动滑板车的认证与上路要求
+- [ ] 泰国对电动滑板车的认证与上路要求
 
 ---
 
@@ -460,7 +460,7 @@ pending_confirmations:
   - "与头部卖家的采购成本对比"
   - "大件仓储位余量"
   - "200kg 承重件供应商能否支持"
-  - "巴西电动滑板车认证与上路要求"
+  - "泰国电动滑板车认证与上路要求"
   - "第二期数据（判断趋势）"
   - "真实竞品链接与推广数据"
 ```

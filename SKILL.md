@@ -1,7 +1,7 @@
 ---
 name: sop-ecom-toolkit
 description: >-
-  跨境电商运营 AI 工具箱总入口（Shopee 巴西站 / Mercado Livre 专精，PT-BR）。
+  跨境电商运营 AI 工具箱总入口（TikTok Shop 泰国站专精，泰语 / THB）。
   覆盖 7 条工作流：市场调研、产品策略与定价、Listing 文案、商品图（9 图框架）、
   短视频物料、广告诊断、评论分析，以及"诊断→回改→复测"闭环。
   当用户要"看类目 / 定价 / 写标题 / 写详情页 / 做主图 / 做详情图 / 9 张图 /
@@ -13,7 +13,7 @@ allowed-tools:
   - Read
   - Write
 metadata:
-  version: 0.4.0
+  version: 0.5.0
   category: e-commerce/operations
   license: MIT
 ---
@@ -30,8 +30,19 @@ metadata:
    指标一律跑 `scripts/` 下的脚本，Agent 不心算
 2. **合规优先** —— 刷单/诱导评价/虚假宣传/恶意举报等平台禁止行为不做
    （见 `docs/03_Compliance_Guard.md`、`docs/05_SOP_Gap_Register.md`）
-3. **买家可见文本 = 目标市场母语（PT-BR）**，内部备注用中文；
+3. **买家可见文本 = 泰语**（品牌名/型号保留原文），内部备注用中文；
    所有数字必须溯源到 `spec_table`
+
+## 平台硬指标速查（TikTok Shop 泰国站）
+
+| 项 | 指标 | 校验脚本 |
+|---|---|---|
+| 标题 | **25–255 字符**，泰语为主，禁促销词/变体库存表述/同词重复 ≥4 次 | `03/scripts/title_lint.py --platform tiktok_th` |
+| 主图 | **1:1，≥600px（推荐 1000+），≤5MB**，首图纯色底（白色最优）、主体 ≥60%、禁文字水印 | `04/scripts/check_main_image.py --platform tiktok_th` |
+| 视频 | **9:16 1080×1920，≤100MB，每商品 1 条**，泰语字幕单行 ≤30 字符，底部 20% 留空 | `05/scripts/video_timing.py` |
+| 费率 | 佣金 8.56%（普通店）+ 商业增长费 8.03% + 交易手续费 3.21% + THB 1.07/笔 | `02/scripts/sku_pricing.py --platform tiktok_th` |
+
+> 以上均为编写时（2026-10）公开口径，**发布前到卖家中心复核**。
 
 ## 路由表
 
@@ -63,7 +74,7 @@ metadata:
 4. 按 prompts/ 的规则产出内容
 5. 有校验脚本的必须过校验，不过不交付
 6. 涉及上架的提醒用户：平台规则为编写时公开值，发布前到卖家中心复核；
-   定价模型未含巴西税费，使用前自行补税率
+   定价模型未含泰国税费，使用前自行补税率
 ```
 
 ## 已知限制

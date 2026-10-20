@@ -1,13 +1,13 @@
 ---
 name: shopee-br-product-video
-description: 跨境电商产品视频创作 Skill（Shopee BR / Mercado Livre，PT-BR）。覆盖 15s/30s 脚本、分镜表、AI 视频 Prompt、配音稿与字幕，并用确定性脚本校验时长与字幕行长。当用户要"做产品视频 / 短视频带货 / 出分镜 / 配音稿字幕"时使用。
+description: 跨境电商产品视频创作 Skill（TikTok Shop 泰国站，泰语）。覆盖 15s/30s 脚本、分镜表、AI 视频 Prompt、配音稿与字幕，并用确定性脚本校验时长与字幕行长。当用户要"做产品视频 / 短视频带货 / 出分镜 / 配音稿字幕"时使用。
 ---
 
 # 产品视频 Skill（05 Product Video Agent）
 
 ## 什么时候用
 
-- 要为 Shopee BR / Mercado Livre 商品做 15s 或 30s 短视频
+- 要为 TikTok Shop 泰国站 商品做 15s 或 30s 短视频
 - 已有脚本/配音稿，要**校验时长是否达标、字幕是否超行**
 - 要把脚本变成分镜表 + AI 视频 Prompt + 配音字幕包
 
@@ -17,7 +17,7 @@ description: 跨境电商产品视频创作 Skill（Shopee BR / Mercado Livre，
    溯源用 [`../03_Listing_Creative_Agent/scripts/spec_consistency.py`](../03_Listing_Creative_Agent/scripts/spec_consistency.py) 校验。
 2. **时长与字幕交给脚本** —— 词数→时长的换算、字幕行长检查**不许自己心算**，
    一律跑 `scripts/video_timing.py`。超时**删词，不许提速语速**。
-3. **买家可见文本必须是 PT-BR 母语** —— 禁止先写英文再翻译。
+3. **买家可见文本必须是 泰语 母语** —— 禁止先写英文再翻译。
 
 ## 工作流
 
@@ -45,7 +45,7 @@ python scripts/video_timing.py --script 配音稿.txt --target 15 --wps 2.4 --su
 
 ## 语速基准
 
-PT-BR 口播 **2.5 词/秒**（≈150 词/分钟）是经验中值：
+泰语 口播 **2.5 词/秒**（≈150 词/分钟）是经验中值：
 - 30s 版台词预算 ≈ **65 词**（留 4s 给留白与镜头切换）
 - 15s 版台词预算 ≈ **30 词**（留 3s 留白）
 
@@ -55,8 +55,8 @@ PT-BR 口播 **2.5 词/秒**（≈150 词/分钟）是经验中值：
 
 | 平台 | 推荐时长 | 关键约束 |
 |---|---|---|
-| Shopee BR | ≤ 30s（主图视频） | 首帧即产品、字幕烧录、竖版 9:16 或 1:1 |
-| Mercado Livre | ≤ 30s | 与主图规范一致性；字幕 PT-BR |
+| TikTok Shop TH | ≤ 30s（主图视频） | 首帧即产品、字幕烧录、竖版 9:16 或 1:1 |
+| TikTok Shop | ≤ 30s | 与主图规范一致性；字幕 泰语 |
 
 平台数值为编写时公开规则，**发布前复核卖家中心原文**。
 

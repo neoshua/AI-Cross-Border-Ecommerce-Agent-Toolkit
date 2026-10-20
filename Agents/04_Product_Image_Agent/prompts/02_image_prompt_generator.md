@@ -42,7 +42,7 @@
 |---|---|
 | **越具体越可控** | `白色背景` → `纯白无缝背景，RGB 255,255,255，无阴影投射` |
 | **不要说"好看"** | 用可执行的视觉描述替代主观评价 |
-| **图内文字单独处理** | 文字**不要**写进出图 Prompt，而是标注为「后期叠字」。原因：当前图像模型渲染文字仍不稳定，尤其葡语变音符号（ã ç õ é）极易出错 |
+| **图内文字单独处理** | 文字**不要**写进出图 Prompt，而是标注为「后期叠字」。原因：当前图像模型渲染文字仍不稳定，尤其泰语变音符号（ã ç õ é）极易出错 |
 | **一个 Prompt 出一个镜头** | 不要试图让一张 Prompt 生成"组合图" |
 
 > **图内文字的处理建议**：本模块输出**不带文字的产品画面 Prompt** + **独立的图内文案**，由设计工具（Figma / Canva / Photoshop）后期叠字。这样文字一定准确、一定清晰、一定不会出现变音符号错误。
@@ -98,7 +98,7 @@ distorted proportions, extra objects, cluttered background,
 plastic look, cartoon, illustration, 3d render (unless intended)
 ```
 
-## Mercado Livre 主图专用（必须加）
+## TikTok Shop 主图专用（必须加）
 
 ```text
 text of any kind, letters, numbers printed on the image, watermark,
@@ -106,7 +106,7 @@ logo, badge, ribbon, colored block, frame, border, background gradient,
 additional props, accessories not included in the package
 ```
 
-## Shopee 主图（可保留商品本身标签）
+## TikTok Shop 主图（可保留商品本身标签）
 
 ```text
 watermark, extra props, cluttered background, distracting elements
@@ -173,7 +173,7 @@ medical setting, exaggerated dramatic lighting, unrealistic physics
 
 - [ ] 每张 AI 出图 Prompt 都齐备七个槽位
 - [ ] 每张图都配了负面 Prompt
-- [ ] ML / Amazon 主图 Prompt 的负面词包含 `text of any kind`
+- [ ] 首图 Prompt 的负面词包含 `text, watermark, logo overlay, badge, border`
 - [ ] 不防水产品的场景 Prompt 负面词包含 `rain, water, swimming pool`
 - [ ] 图内文字**未写进**出图 Prompt，而是标注为后期叠字
 - [ ] 图 8 已标注「必须实拍」

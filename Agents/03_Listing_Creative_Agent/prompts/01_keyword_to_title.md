@@ -36,7 +36,7 @@
 
 ## 分类定义
 
-| 类别 | 定义 | 示例（巴西 / 电动滑板车） |
+| 类别 | 定义 | 示例（泰国 / 电动滑板车） |
 |---|---|---|
 | **核心词** | 说明产品是什么，买家搜索的第一入口 | `Patinete Elétrico`、`Scooter Elétrico` |
 | **参数词** | 说明功率、承重、容量、尺寸等配置 | `500W`、`150kg`、`10Ah` |
@@ -102,7 +102,7 @@ Patinete Elétrico Adulto 500W 150kg com Banco Dobrável para Mobilidade Urbana
 ## 生成要求
 
 1. **严格按 input.platform 的字符上限**，输出时**标注实际字符数**（格式：`116/120`）
-2. **主关键词前置**（Shopee 前 30 字符；ML 最前）
+2. **主关键词前置**（TikTok Shop 前 30 字符；ML 最前）
 3. **参数词只能用 `spec_table` 里的真实数值**
 4. **不做同义反复**（`Patinete Elétrico Patinete Elétrico Scooter` ❌）
 5. **不堆砌无关词**

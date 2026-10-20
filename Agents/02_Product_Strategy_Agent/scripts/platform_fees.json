@@ -1,135 +1,81 @@
 {
   "_meta": {
-    "updated": "2026-10-18",
-    "currency": "BRL",
-    "note": "费率为编写时公开口径，按平台官方公告与主流费率计算器整理；发布前必须到各平台卖家中心复核。显式 CLI 参数（--commission 等）永远优先于预设。",
+    "updated": "2026-10-20",
+    "currency": "THB",
+    "note": "费率为编写时（2026-10）公开口径，按 TikTok Shop 泰国站卖家中心公告整理；平台费率调整频繁（2026 年内已多次上调），发布前必须到卖家中心复核。显式 CLI 参数（--commission 等）永远优先于预设。",
     "conventions": {
       "commission_tiers": "佣金随售价分档，按序首个命中（max=null 表示无上限）",
       "fixed_fee_tiers": "按件固定费随售价分档，同为价格分档",
-      "extra_pct": "平台自动附加的百分比（如免运计划），默认计入成本",
+      "extra_pct": "平台附加的百分比（商业增长费 + 交易手续费），默认计入成本",
       "return_pct": "退货损耗预留（估算口径，非平台费）",
-      "tax_pct": "综合有效税率预留，默认 0（巴西实际税负按主体与 regime 而异，须自行补充）"
+      "tax_pct": "综合有效税率预留，默认 0（泰国 VAT 7% 与进口关税按主体与货值而异，须自行补充）"
     }
   },
 
-  "shopee_br": {
-    "label": "Shopee 巴西",
-    "commission_tiers": [
-      {"max": 79.99, "pct": 20},
-      {"max": null, "pct": 14}
-    ],
+  "tiktok_th": {
+    "label": "TikTok Shop 泰国（普通店·通用类目）",
+    "commission_pct": 8.56,
     "fixed_fee_tiers": [
-      {"max": 79.99, "fee": 4.0},
-      {"max": 99.99, "fee": 16.0},
-      {"max": 199.99, "fee": 20.0},
-      {"max": null, "fee": 26.0}
+      {"max": null, "fee": 1.07}
     ],
     "return_pct": 2,
     "ad_pct": 5,
     "tax_pct": 0,
-    "extra_pct": 0,
+    "extra_pct": 11.24,
     "sources": [
-      "Shopee BR 2026-03-01 费率新政（亿恩网/出海网 2026-02 报道）：固定费阶梯 4/16/20/26、取消 R$100 佣金上限",
-      "Precifica Certo Shopee 计算器 2026 规则：<R$80 佣金 20%、≥R$80 佣金 14%",
-      "14%/20% 的另一种口径：14% 基础 + 6% 免运计划（Frete Grátis Extra）；两种理解都存在，用 --commission 覆盖"
+      "TikTok Shop 泰国站 2026-05-06 起佣金调整：普通店 3C 配件/箱包/美妆个护等主流类目 7.49% → 8.56%",
+      "商业增长费（Growth Fee，不计入佣金）：电子产品 6.96%、其余品类 8.03%",
+      "交易手续费：3.21%（计费基数含平台发给买家的优惠券金额）",
+      "逐笔固定费 THB 1.07/笔（第三方 take-rate 追踪口径，2026-08 更新）",
+      "交叉参考：cube.asia TikTok Shop Take-Rate Tracker 2026-08 — 泰国总 take-rate 16.32%–17.42% + THB 1.07/笔"
     ],
     "notes": [
-      "2026-03-01 起：固定费按售价阶梯收取（≤79.99→R$4；80–99.99→R$16；100–199.99→R$20；≥200→R$26），取消单件 R$100 佣金上限，高单价商品成本显著上升",
-      "Pix 支付补贴 5%（售价 80–499）/ 8%（≥500），可部分对冲固定费上涨；免运计划 2026-03 起全站免费参与",
-      "CPF 个人卖家近 90 天订单 >450 笔：每单加收 R$3；售价 <R$12 递减收费、<R$8 按售价 50% 收固定费"
+      "扣费公式（官方）：佣金 =（商品税前价格 − 卖家优惠）× 费率；运费与平台优惠不计入基数",
+      "extra_pct 11.24 = 商业增长费 8.03 + 交易手续费 3.21，两者性质不同但都随售价线性扣，故合并计入；要拆开看就用 --extra-pct 覆盖",
+      "低价陷阱：THB 99 商品扣 19.8% + THB 1.07，实际费率约 20.8% —— 低客单价先算账再上架",
+      "新店/大促期常有佣金减免活动（按邀请），用 --commission 覆盖",
+      "Mall 店与电子类目费率不同，见 tiktok_th_mall / tiktok_th_electronics"
     ]
   },
 
-  "mercadolivre_br": {
-    "label": "Mercado Livre 巴西（Clássico）",
-    "commission_pct": 11,
+  "tiktok_th_mall": {
+    "label": "TikTok Shop 泰国（Mall 店）",
+    "commission_pct": 9.63,
     "fixed_fee_tiers": [
-      {"max": 79.0, "fee": 6.5},
-      {"max": null, "fee": 0}
+      {"max": null, "fee": 1.07}
     ],
     "return_pct": 2,
     "ad_pct": 5,
     "tax_pct": 0,
-    "extra_pct": 0,
+    "extra_pct": 11.24,
     "sources": [
-      "Ecommerce na Prática / Conta Azul 2026：Clássico 佣金 10–14%（计算器主流口径 11%），Premium 15–19%（口径 16%）",
-      "Ecommerce Puro 2026-03：<R$79 的固定费自 2026-03-02 起改为按包裹重量/尺寸的变量物流成本；≥R$79 仅佣金",
-      "Go Smarter ML 计算器 2026：Clássico 11% + 类目调整（Moda +2pp / Eletrônicos premium +3pp / Livros −1pp），<R$79 固定费 R$6.50"
+      "TikTok Shop 泰国站 2026-05-06：Mall 店同类目 8.56% → 9.63%",
+      "Mall 佣金同样含税；商业增长费与交易手续费口径同普通店"
     ],
     "notes": [
-      "<R$79 固定费 R$6.50 是旧表估算值 —— 2026-03-02 起改为按重量/尺寸计的变量物流成本，轻小件可能更低、大件更低值更高，精确值须按包裹规格在卖家中心查表",
-      "产品定价 ≥R$79 可省掉按件费：R$70 的商品『为省 R$6.50 而定价多付一倍』是常见误区，提价过线是第一个毛利杠杆",
-      "Premium 广告位（Parceiro/Mercado Ads 另计）：满额免邮与 Full 物流成本未计入本预设，需按实际运营模式补充"
+      "Mall 贵约 1.07pp，换的是商城徽章、搜索加权与大促资格 —— 品牌店通常值得，白牌先跑普通店",
+      "Mall 入驻要品牌资质（商标注册证或授权链），没有就别按这套算"
     ]
   },
 
-  "mercadolivre_br_premium": {
-    "label": "Mercado Livre 巴西（Premium）",
-    "commission_pct": 16,
+  "tiktok_th_electronics": {
+    "label": "TikTok Shop 泰国（电子/3C 类目）",
+    "commission_pct": 7.22,
     "fixed_fee_tiers": [
-      {"max": 79.0, "fee": 6.5},
-      {"max": null, "fee": 0}
+      {"max": null, "fee": 1.07}
     ],
-    "return_pct": 2,
+    "return_pct": 3,
     "ad_pct": 5,
     "tax_pct": 0,
-    "extra_pct": 0,
+    "extra_pct": 10.17,
     "sources": [
-      "同 mercadolivre_br；Premium 佣金 15–19%，计算器主流口径 16%（含 12x 免息分期与更高曝光）"
+      "电子产品佣金档 7.22%（第三方 take-rate 追踪 2026-08）",
+      "电子产品商业增长费 6.96% + 交易手续费 3.21% = 10.17%"
     ],
     "notes": [
-      "Premium 比 Clássico 贵约 5pp，换取分期免息 + 更高曝光位 —— 高客单价商品通常值得，低毛利商品先跑 Clássico 验证转化"
-    ]
-  },
-
-  "amazon_br": {
-    "label": "Amazon 巴西",
-    "commission_pct": 15,
-    "fixed_fee_tiers": [
-      {"max": null, "fee": 0}
-    ],
-    "monthly_fee": 19.0,
-    "return_pct": 2,
-    "ad_pct": 5,
-    "tax_pct": 0,
-    "extra_pct": 0,
-    "sources": [
-      "Amazon Seller Central BR 官方费率表（Selling on Amazon fee schedule，2026-10-31 生效版）",
-      "Professional 计划 R$19/月（新卖家 12 个月免订阅促销）；Individual 计划无月费但每件 R$2.00（用 --fixed-fee 2 模拟）",
-      "FBA 履约费未计入本预设（按尺寸/重量另计：小件 ≤250g 约 R$9.90、中件 ≤500g 约 R$12.15，第三方口径待官方核对）"
-    ],
-    "notes": [
-      "15% 为 Most categories 通用档；常用类目差异：Electronics 11–13%（Electronics & PC Accessories >R$100 部分降为 10%）、Home/Kitchen 12%、PC 12%、Sports 12%、Beauty 13%、Books/Media 15%、Furniture 15%（>R$200 部分 10%）；最低佣金 R$1.00/件",
-      "referral fee 按 买家支付总额（商品+运费+礼品包装）计，不只是商品价",
-      "退货管理费：退款时扣 min(R$10, 20%×referral fee) —— 与退货损耗预留（return_pct）是两回事",
-      "FBA 模式需另加履约费+仓储费（Q4 旺季上浮），FBM 自发货则运费成本进到岸成本"
-    ]
-  },
-
-  "tiktok_br": {
-    "label": "TikTok Shop 巴西",
-    "commission_tiers": [
-      {"max": 49.99, "pct": 10},
-      {"max": null, "pct": 6}
-    ],
-    "fixed_fee_tiers": [
-      {"max": 49.99, "fee": 4.0},
-      {"max": null, "fee": 6.0}
-    ],
-    "return_pct": 2,
-    "ad_pct": 5,
-    "tax_pct": 0,
-    "extra_pct": 6,
-    "sources": [
-      "TikTok Shop BR 2026-06-12 公告、2026-07-15 00:00（巴西利亚时间）生效：折扣后售价 <R$50 → 佣金 10% + 固定费 R$4；≥R$50 → 佣金 6% + 固定费 R$6",
-      "Exame Lab（2026-07 表格）/ SellerMargin Tools / Vendedor Lucrativo 计算器交叉印证",
-      "免运计划（Programa de Taxas de Envio）6%，单件上限 R$50，注册后自动加入（Seller Center 可退出）—— 计入 extra_pct"
-    ],
-    "notes": [
-      "分档基准是『卖家折扣后』的售价（平台补贴不算在内）—— R$55 商品打 R$10 券按 R$45 结算，会跳档到 10%+R$4",
-      "低价位陷阱：R$20 商品 = 10%（R$2）+ 固定费 R$4 = 30% 起步，加免运 6% 到 36% —— 低客单价先算账再上架",
-      "新店 60–90 天免佣金（活动而定），但固定费与免运计划不免；达人对佣金（通常 8–15%）另算，可与平台费叠加",
-      "无月费；用 --extra-pct 0 模拟退出免运计划的口径"
+      "电子类退货损耗预留调高到 3%（功能争议、运输损伤概率高于平均）",
+      "含电池商品受航空运输限制，头程成本要单独核；这类成本进到岸成本，不进本预设",
+      "认证（TISI / NBTC）缺失会被下架，成本里有认证费的要摊进到岸成本"
     ]
   }
 }

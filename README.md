@@ -1,6 +1,10 @@
 # AI Cross Border Ecommerce Agent Toolkit
 
-**AI 跨境电商运营智能体工具箱** · *Turn cross-border ecommerce SOPs into reusable AI Agent workflows.*
+**AI 跨境电商运营智能体工具箱 · TikTok Shop 泰国站专精** · *Turn cross-border ecommerce SOPs into reusable AI Agent workflows.*
+
+> 面向 **TikTok Shop 泰国站**（泰语 / THB / 9:16 竖版）。平台硬指标、费率预设、校验脚本
+> 全部按泰国站口径内置，不是「通用电商模板 + 换个语言」。
+> 编写时口径 2026-10，**发布前请到卖家中心复核**。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Status: v0.3 beta](https://img.shields.io/badge/status-v0.3%20beta-orange.svg)](./CHANGELOG.md)
@@ -29,7 +33,13 @@
 
 本仓库的方法论拆解自一份 38 页的内部运营手册，原文已随仓库提供：
 
-📄 **[《Shopee 巴西站运营 SOP 总框架》（PDF · 38 页 · 29.7 MB）](./docs/电商运营SOP总框架.pdf)**
+📄 **[《电商运营 SOP 总框架》（PDF · 38 页 · 29.7 MB）](./docs/电商运营SOP总框架.pdf)**
+
+> 手册原始平台是 **Shopee 巴西站**，所以里面的大量平台规则（标题字符数、主图规范、费率）
+> **对 TikTok 泰国站不适用**。本仓库只沿用了它的**方法论结构**（选品前置判断、卖点收敛、
+> 定价模型、广告漏斗、评论归因），平台规则层已整体替换为 TikTok Shop 泰国站口径：
+> 见 [`docs/02_Platform_Output_Spec.md`](./docs/02_Platform_Output_Spec.md)
+> 与各模块的 `references/` 规则卡。
 
 SOP 章节与 Agent 模块的逐条对应关系见 [`docs/00_Architecture_SOP_to_Agent.md`](./docs/00_Architecture_SOP_to_Agent.md)。
 
@@ -84,7 +94,8 @@ Step 3  把「系统 Prompt」+「任务 Prompt」+「填好的模板」丢给�
 Step 4  用 docs/04_Result_Checklist.md 逐条自检，通过即发布
 ```
 
-**第一次跑，建议按这个顺序**（以 Patinete Elétrico 为例，见 [`Examples/`](./Examples/)）：
+**第一次跑，建议按这个顺序**（案例以电动滑板车为例，见 [`Examples/`](./Examples/)；
+案例里的葡语文案是历史录制，**结构可参考，语言层要按泰语重做**）：
 
 ```mermaid
 flowchart LR
@@ -126,7 +137,7 @@ AI-Cross-Border-Ecommerce-Agent-Toolkit/
 │   ├── 03_Compliance_Guard.md            # 合规红线 + 灰产动作的合规改写 ⭐
 │   ├── 04_Result_Checklist.md            # 交付自检清单
 │   ├── 05_SOP_Gap_Register.md            # SOP 未实现项登记表（透明化）
-│   └── 电商运营SOP总框架.pdf              # 原始内部手册全文（38 页，未删改）
+│   └── 电商运营SOP总框架.pdf              # 原始内部手册（Shopee BR 平台，仅方法论参考）
 │
 ├── Agents/                       # AI 智能体模块
 │   ├── README.md                 # 模块索引 + 交接契约
@@ -140,7 +151,7 @@ AI-Cross-Border-Ecommerce-Agent-Toolkit/
 │   ├── 02_Product_Strategy_Agent/             ✅ v0.4 Skill 化
 │   │   ├── SKILL.md    Agent 直接调用入口 ⭐
 │   │   ├── references/ pricing-rules（公式与口径）⭐
-│   │   ├── scripts/    sku_pricing（净利率/盈亏价/目标价/券余量矩阵）+ platform_fees.json（5 平台费率预设）⭐
+│   │   ├── scripts/    sku_pricing（净利率/盈亏价/目标价/券余量矩阵）+ platform_fees.json（3 套泰国站费率预设）⭐
 │   │   ├── prompts/    00_system · 01_product_decision · 02_pricing_and_sku
 │   │   ├── templates/  input_strategy_brief · output_product_requirement
 │   │   └── examples/   patinete_eletrico_strategy.md · sample-skus.csv
@@ -153,7 +164,7 @@ AI-Cross-Border-Ecommerce-Agent-Toolkit/
 │   │   └── examples/   powerbank_20000mah.md · spec_table.csv
 │   ├── 04_Product_Image_Agent/                ✅ v0.4 Skill 化
 │   │   ├── SKILL.md    Agent 直接调用入口 ⭐
-│   │   ├── references/ platform-shopee · platform-mercadolivre · platform-amazon · scenarios-9grid
+│   │   ├── references/ platform-tiktok-th（泰国站规则卡）· scenarios-9grid
 │   │   ├── scripts/    check_main_image（像素级合规校验 + --fix）⭐
 │   │   ├── prompts/    00_system · 01_image_plan_9grid · 02_image_prompt_generator
 │   │   ├── templates/  input_image_brief · output_image_prompt_pack
@@ -198,21 +209,24 @@ AI-Cross-Border-Ecommerce-Agent-Toolkit/
 
 ## 📱 平台支持
 
-| 平台 | 状态 | 标题上限 | 主图规范 | 输出语言 |
-|---|---|---|---|---|
-| **Shopee** | ✅ 一等支持 | 120 字符（前 30 字符权重最高） | 白底，最多 9 图 | PT-BR / EN / 本地语 |
-| **Mercado Livre** | ✅ 一等支持 | 60 字符 | 背景干净（白/纯色/实景按类目），主体 85–95%，≥1200×1200 | PT-BR / ES |
-| Amazon | 📄 字段已适配 | 200 字符（建议 80） | 纯白底，≥1000×1000 | EN |
-| TikTok Shop | 📄 字段已适配 | 按站点 | 竖版 9:16 优先 | 本地语 |
-| Shopify | 📄 字段已适配 | 建议 70 | 无硬限制 | EN / 本地语 |
+**只做 TikTok Shop 泰国站**。其他平台（Shopee / Lazada / Amazon / Mercado Livre）不在支持范围内 ——
+规则卡与费率预设已移除，避免拿错阈值去上架。
 
-详细字段规范见 [`docs/02_Platform_Output_Spec.md`](./docs/02_Platform_Output_Spec.md)。**所有硬指标以平台后台实时规则为准，发布前请复核。**
+| 项 | 泰国站硬指标 | 校验脚本 |
+|---|---|---|
+| 标题 | **25–255 字符**，泰语为主，禁促销词 / 变体库存表述 / 同词重复 ≥4 次；二手商品须 `[Second-hand]` 开头 | `03/scripts/title_lint.py --platform tiktok_th` |
+| 主图 | **1:1，≥600px（推荐 1000+），≤5MB**，首图纯色底（白色最优）、主体 ≥60%、禁文字/水印/Logo/边框 | `04/scripts/check_main_image.py --platform tiktok_th` |
+| 9 图 | 首图只负责看清；卖点、尺寸、包装清单放第 2–9 图 | — |
+| 视频 | **9:16 1080×1920，≤100MB，每商品 1 条**，泰语字幕单行 ≤30 字符，底部 20%/右侧 15% 留空 | `05/scripts/video_timing.py` |
+| 费率 | 佣金 8.56%（普通店）/ 9.63%（Mall）/ 7.22%（电子）+ 商业增长费 8.03%（电子 6.96%）+ 交易费 3.21% + THB 1.07/笔 | `02/scripts/sku_pricing.py` |
+
+详细字段规范见 [`docs/02_Platform_Output_Spec.md`](./docs/02_Platform_Output_Spec.md)。**所有硬指标以卖家中心实时规则为准，发布前请复核。**
 
 ---
 
 ## 🧭 设计原则
 
-1. **母语输出优先**——巴西站的标题必须像巴西人写的。直译英文 Listing 的 CTR 结构性偏低，所以 Prompt 强制要求原生 PT-BR 表达，而不是"翻译腔"。
+1. **母语输出优先**——泰国站的标题必须像泰国人写的。直译中文/英文 Listing 的 CTR 结构性偏低，所以 Prompt 强制要求原生泰语表达（修饰语在后、量词不省、短语间留空格），而不是"翻译腔"。
 2. **输入契约化**——每个 Prompt 都声明"缺什么字段就不许输出什么内容"。宁可报错，不许编参数。
 3. **合规优先于转化**——涉及参数虚标、品牌词、夸大宣传的动作，Prompt 里一律做**硬拦截**，不是"建议"。详见 [`docs/03_Compliance_Guard.md`](./docs/03_Compliance_Guard.md)。
 4. **可验证**——每个模块交付时给一份自检清单，逐条打勾才算完成。产出对不对，不靠感觉。
@@ -238,7 +252,7 @@ AI-Cross-Border-Ecommerce-Agent-Toolkit/
 | **v0.2** | 2 个运营 Agent（06 广告 / 07 评论）+ 闭环案例 |
 | **v0.3** | 2 个分析 Agent（01 市场 / 02 策略）+ **数据解析与指标计算脚本**（当前） |
 | **v1.0** | 打通完整工作流，输出一键上架用的素材包 |
-| V2 | 接入平台 API（Shopee / Mercado Livre）自动拉取数据 |
+| V2 | 接入 TikTok Shop 开放平台 API（订单 / 商品 / 广告）自动拉取数据 |
 | V3 | 网页应用，可视化跑工作流 |
 | V4 | 升级为自动化 Agent 系统（定时执行 + 闭环优化） |
 

@@ -9,7 +9,7 @@
 
 ```yaml
 platform*: shopee              # shopee | mercadolivre | amazon | tiktokshop | shopify
-target_market*: 巴西            # 决定输出语言：巴西→PT-BR / 墨西哥→ES
+target_market*: 泰国            # 决定输出语言：泰国→泰语 / 墨西哥→ES
 mode*: single                  # single | variant | iterate
 variant_count: 3               # mode=variant 时必填，2–4
 ```
@@ -44,7 +44,7 @@ sku_internal: ""                            # 内部 SKU 编码（可选）
 | `voltagem_entrada` | | 如 `100–240 V` |
 | `portas` | | 如 `2× USB-A + 1× USB-C` |
 | `tempo_recarga` | | 注明测试条件 |
-| `garantia` | | **巴西站必需** |
+| `garantia` | | **泰国站必需** |
 | `certificacoes` | | ⚠️ 仅填**实际持有**的认证，虚构属高危违规 |
 | `_custom_1` | | 类目特有参数，按需增删 |
 | `_custom_2` | | |
