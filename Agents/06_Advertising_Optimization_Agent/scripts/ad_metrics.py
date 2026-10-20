@@ -10,12 +10,12 @@
   本脚本只输出确定性数字与分级动作建议（P0 止血 / P1 改善 / P2 放量），
   **不改后台、不执行** —— 执行由人决定（合规与风控要求）。
 
-盈亏线公式（含巴西税费项）：
+盈亏线公式（含泰国税费项）：
   广告前贡献 = 售价 − 产品成本 − 头程 − 尾程 − 售价×佣金% − 售价×退货损耗% − 售价×税率%
   盈亏线 ACoS = 广告前贡献 ÷ 售价      盈亏线 ROAS = 1 ÷ 盈亏线 ACoS
   可承受 CPC  = 售价 × 转化率 × 目标 ACoS
-税率口径：巴西税制复杂（ICMS/PIS/COFINS/Simples Nacional），此处用「综合有效税率」
-  一个参数表示（按售价百分比），由使用者按自己的税制填。
+税率口径：泰国 VAT 7% + 进口关税（按货值与 HS Code），此处用「综合有效税率」
+  一个参数表示（按售价百分比），由使用者按自己的货值折算后填。
 """
 import argparse
 import csv
@@ -300,7 +300,7 @@ def main():
     c.add_argument("--platform", help="平台费率预设 key（与 02 sku_pricing 共用 platform_fees.json）")
     c.add_argument("--commission", type=float, default=None, help="平台佣金 %%（覆盖预设）")
     c.add_argument("--return", dest="return_rate", type=float, default=None, help="退货损耗 %%（覆盖预设）")
-    c.add_argument("--tax", type=float, default=None, help="综合有效税率 %%（巴西税制自行折算）")
+    c.add_argument("--tax", type=float, default=None, help="综合有效税率 %%（泰国 VAT 7%% + 进口关税，自行折算成占售价比）")
     c.add_argument("--extra-pct", type=float, default=None, help="平台附加 %%（如免运计划；覆盖预设）")
     c.add_argument("--fixed-fee", type=float, default=None, help="按件固定费 ฿（覆盖预设阶梯）")
     c.add_argument("--target-acos", type=float, help="目标 ACoS %%")

@@ -27,7 +27,7 @@ metadata:
 ```bash
 # 标题校验（字符数是实测值）
 python scripts/title_lint.py "标题文本" --platform tiktok_th \
-    --forbidden "iPhone,Samsung" --keywords "carregador,20000mah,45w"
+    --forbidden "iPhone,Samsung" --keywords "กระเป๋าเป้,กันน้ำ,20นิ้ว"
 
 # 参数一致性：文案里每个数字必须溯源到 spec_table
 python scripts/spec_consistency.py --spec examples/spec_table.csv --text 详情页文案.md

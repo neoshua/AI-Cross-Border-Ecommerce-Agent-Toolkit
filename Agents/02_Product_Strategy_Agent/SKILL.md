@@ -24,21 +24,23 @@ metadata:
 ## 快速开始
 
 ```bash
-# 平台预设（推荐）：费率来自 scripts/platform_fees.json，含价格分档佣金/固定费
-# 可用平台：shopee_br / mercadolivre_br / mercadolivre_br_premium / amazon_br / tiktok_br
-python scripts/sku_pricing.py calc --platform tiktok_th_br --cost 935 --price 2199
+# 平台预设（推荐）：费率来自 scripts/platform_fees.json
+# 可用平台：tiktok_th（普通店）/ tiktok_th_mall / tiktok_th_electronics
+python scripts/sku_pricing.py calc --platform tiktok_th --cost 210 --price 590
 python scripts/sku_pricing.py --list-platforms          # 查看全部预设与费率来源
 
 # 多 SKU 矩阵 + 价格阶梯 + 券余量（读 CSV）
-python scripts/sku_pricing.py matrix --file examples/sample-skus.csv --platform tiktok_th_br
+python scripts/sku_pricing.py matrix --file examples/sample-skus.csv --platform tiktok_th
 
 # 手工口径（兼容旧用法，显式参数永远优先于预设）
-python scripts/sku_pricing.py calc --cost 935 --price 2199 \
-    --commission 14 --return 2 --ad 5 --tax 0 --target-margin 32
+python scripts/sku_pricing.py calc --cost 210 --price 590 \
+    --commission 8.56 --extra-pct 11.24 --fixed-fee 1.07 --return 2 --ad 5 --tax 7 \
+    --target-margin 32
 
 # 多 SKU 矩阵：净利率表 + 价格阶梯 + 券余量 + 结构提醒
 python scripts/sku_pricing.py matrix --file examples/sample-skus.csv \
-    --commission 14 --return 2 --ad 5 --tax 0 --target-margin 32
+    --commission 8.56 --extra-pct 11.24 --fixed-fee 1.07 --return 2 --ad 5 --tax 7 \
+    --target-margin 32
 ```
 
 ---

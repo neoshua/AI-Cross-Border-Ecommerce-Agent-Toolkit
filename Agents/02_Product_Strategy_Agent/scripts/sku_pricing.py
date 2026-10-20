@@ -2,18 +2,17 @@
 """SKU 定价算术脚本 —— 只算，不猜，不定价（定价决策由人）。
 
   # 平台预设（推荐）：费率来自 scripts/platform_fees.json
-  python sku_pricing.py calc --platform shopee_br --cost 935 --price 2199
-  python sku_pricing.py calc --platform mercadolivre_br --cost 935 --price 2199
-  python sku_pricing.py calc --platform amazon_br --cost 935 --price 2199
-  python sku_pricing.py calc --platform tiktok_br --cost 935 --price 2199
+  python sku_pricing.py calc --platform tiktok_th --cost 210 --price 590
+  python sku_pricing.py calc --platform tiktok_th_mall --cost 210 --price 590
+  python sku_pricing.py calc --platform tiktok_th_electronics --cost 210 --price 590
   python sku_pricing.py --list-platforms
 
   # 手工口径（兼容旧用法，与预设等价的自定义费率）
-  python sku_pricing.py calc --cost 935 --price 2199 --commission 14 --return 2 \
-      --ad 5 --tax 0 --target-margin 32
-  python sku_pricing.py matrix --file examples/sample-skus.csv --platform shopee_br
+  python sku_pricing.py calc --cost 210 --price 590 --commission 8.56 --return 2 \
+      --ad 5 --tax 7 --target-margin 32
+  python sku_pricing.py matrix --file examples/sample-skus.csv --platform tiktok_th
 
-公式（含巴西税费项与平台按件固定费）：
+公式（含泰国税费项与平台按件固定费）：
   广告前毛利 = 售价 − 到岸成本 − 售价×(佣金%+退货%+税%+平台附加%) − 按件固定费
   净利率     = (广告前毛利 − 售价×广告%) ÷ 售价
   盈亏平衡价 / 目标价：费率随价格分档时用不动点迭代求（12 轮收敛）
@@ -126,7 +125,7 @@ def _model_from_args(args, plats: dict) -> FeeModel:
     if getattr(args, "platform", None):
         key = args.platform.strip()
         if key not in plats:
-            # 允许不带地区后缀（如 --platform mercadolivre → mercadolivre_br）
+            # 允许不写全名（如 --platform tiktok_th_ → 三套泰国预设会报歧义并提示写全）
             matches = [k for k in plats
                        if not k.startswith("_") and (k == key or k.startswith(key + "_"))]
             if len(matches) == 1:

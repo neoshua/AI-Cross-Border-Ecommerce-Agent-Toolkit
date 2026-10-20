@@ -34,21 +34,22 @@ metadata:
 ## 快速开始（两条命令）
 
 ```bash
-# 1) 算盈亏线与可承受 CPC —— 平台预设（与 02 共用 platform_fees.json，含价格分档固定费）
-python scripts/ad_metrics.py calc --platform tiktok_th_br --price 113.40 --product-cost 55 \
+# 1) 算盈亏线与可承受 CPC —— 平台预设（与 02 共用 platform_fees.json，含按笔固定费）
+python scripts/ad_metrics.py calc --platform tiktok_th --price 590 --product-cost 210 \
     --target-acos 25 --cvr 0.44
 
 #    或手工口径（显式参数优先）
-python scripts/ad_metrics.py calc --price 113.40 --product-cost 55 \
-    --commission 14 --return 2 --tax 0 --target-acos 25 --cvr 0.44
+python scripts/ad_metrics.py calc --price 590 --product-cost 210 \
+    --commission 8.56 --extra-pct 11.24 --fixed-fee 1.07 --return 2 --tax 7 \
+    --target-acos 25 --cvr 0.44
 
 # 2) 读广告导出报表 → 全量诊断 + P0/P1/P2 分级动作
 python scripts/ad_metrics.py diagnose --file examples/sample-ad-report.csv \
-    --price 113.40 --product-cost 55 --commission 14 --return 2 --tax 0 --target-acos 25
+    --platform tiktok_th --price 590 --product-cost 210 --target-acos 25
 ```
 
-`--tax` 是**综合有效税率**（泰国 ICMS/PIS/COFINS/Simples Nacional 折算成占售价百分比）。
-税率 8% 时盈亏线 ROAS 从 2.82 抬到 3.64 —— **不含税的盈亏线是骗人的**。
+`--tax` 是**综合有效税率**（泰国 VAT 7% + 进口关税，按货值与 HS Code 折算成占售价百分比）。
+税率从 0 抬到 7% 时盈亏线 ROAS 会明显上移 —— **不含税的盈亏线是骗人的**。
 
 ---
 
